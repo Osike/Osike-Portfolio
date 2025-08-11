@@ -21,7 +21,7 @@ export const About: React.FC = () => {
           >
             <div className="relative z-10">
               <img
-                src="https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=500&h=600&fit=crop"
+                src="/osike.jpg"
                 alt="Shadrack Osike"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
               />

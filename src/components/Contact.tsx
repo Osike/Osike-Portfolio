@@ -4,6 +4,7 @@ import {
   EnvelopeIcon, 
   PhoneIcon,
 } from '@heroicons/react/24/outline';
+import { Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,26 +31,26 @@ export const Contact: React.FC = () => {
   const socialLinks = [
     {
       name: 'Instagram',
-      icon: '📷',
-      url: 'https://instagram.com',
+      icon: <Instagram className="w-6 h-6" />,
+      url: 'https://instagram.com/hp_brains',
       color: 'hover:text-pink-500',
     },
     {
       name: 'LinkedIn',
-      icon: '💼',
-      url: 'https://linkedin.com',
+      icon: <Linkedin className="w-6 h-6" />,
+      url: 'https://www.linkedin.com/in/osike-shadrack/',
       color: 'hover:text-blue-500',
     },
     {
       name: 'Gmail',
-      icon: '✉️',
-      url: 'mailto:shadrack@example.com',
+      icon: <Mail className="w-6 h-6" />,
+      url: 'mailto:shadyabacus@gmail.com',
       color: 'hover:text-red-500',
     },
     {
       name: 'WhatsApp',
-      icon: '📱',
-      url: 'https://wa.me/1234567890',
+      icon: <MessageCircle className="w-6 h-6" />,
+      url: 'https://wa.me/254701570902',
       color: 'hover:text-green-500',
     },
   ];
@@ -160,7 +161,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 dark:text-white">Email</p>
-                    <p className="text-gray-600 dark:text-gray-300">shadrack@example.com</p>
+                    <p className="text-gray-600 dark:text-gray-300">shadyabacus@gmail.com</p>
                   </div>
                 </motion.div>
                 
@@ -173,7 +174,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900 dark:text-white">Phone</p>
-                    <p className="text-gray-600 dark:text-gray-300">+254 123 456 789</p>
+                    <p className="text-gray-600 dark:text-gray-300">+254 701 570 902</p>
                   </div>
                 </motion.div>
               </div>
@@ -191,7 +192,7 @@ export const Contact: React.FC = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-12 h-12 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center text-xl transition-all ${link.color} hover:shadow-lg`}
+                    className={`w-12 h-12 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center transition-all ${link.color} hover:shadow-lg`}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                   >

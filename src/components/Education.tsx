@@ -7,14 +7,14 @@ const timeline = [
     type: 'education',
     title: 'BTIT — Technical University of Mombasa',
     subtitle: 'Bachelor of Technology in Information Technology',
-    period: '2020 - 2024',
+    period: '2022 - 2026',
     description: 'Comprehensive study in software development, database systems, and network technologies.',
   },
   {
     type: 'education',
     title: 'Power Learn Project',
     subtitle: 'Software Engineering Certification',
-    period: '2023',
+    period: '2025',
     description: 'Intensive program focused on full-stack development and modern software engineering practices.',
   },
   {
@@ -28,7 +28,7 @@ const timeline = [
     type: 'experience',
     title: 'Power Learn Project',
     subtitle: 'Volunteer — Ticketing Manager & Technical Support',
-    period: '2023 - Present',
+    period: 'Present',
     description: 'Managed technical support systems and provided mentorship to emerging developers.',
   },
 ];
