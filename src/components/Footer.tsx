@@ -2,7 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const brands = [
-  'LoyaltyTracker', 'Sheriac Bot', 'Afiya Pal', 'Logistics SaaS', 'Noorzam', 'TechHub'
+  {
+    name: 'LoyaltyTracker',
+    logo: '/logos/loyaltytracker.png',
+  },
+  {
+    name: 'Sheriac Bot',
+    logo: '/logos/sheriac-bot.png',
+  },
+  {
+    name: 'Afiya Pal',
+    logo: '/logos/afiya-pal.png',
+  },
+  {
+    name: 'Logistics SaaS',
+    logo: 'public/trucklogo.png',
+  },
+  {
+    name: 'Noorzam',
+    logo: 'public/noorzam.png',
+  },
+  {
+    name: 'TechHub',
+    logo: '/logos/techhub.png',
+  },
 ];
 
 export const Footer: React.FC = () => {
@@ -23,7 +46,7 @@ export const Footer: React.FC = () => {
         
         <div className="relative">
           <motion.div
-            className="flex space-x-12"
+            className="flex space-x-12 items-center"
             animate={{ x: ['0%', '-50%'] }}
             transition={{
               duration: 20,
@@ -34,11 +57,15 @@ export const Footer: React.FC = () => {
           >
             {[...brands, ...brands].map((brand, index) => (
               <motion.div
-                key={`${brand}-${index}`}
-                className="flex-shrink-0 text-2xl font-bold text-gray-300 hover:text-teal-400 transition-colors cursor-pointer"
+                key={`${brand.name}-${index}`}
+                className="flex-shrink-0 cursor-pointer"
                 whileHover={{ scale: 1.1 }}
               >
-                {brand}
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="h-12 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
+                />
               </motion.div>
             ))}
           </motion.div>

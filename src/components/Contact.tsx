@@ -53,6 +53,13 @@ export const Contact: React.FC = () => {
       url: 'https://wa.me/254701570902',
       color: 'hover:text-green-500',
     },
+    {
+      name: 'Github',
+      icon :<github className="w-6 h-6"/>,
+      url: 'https://github/osike',
+      color:'hover:text-black-500',
+    },
+  
   ];
 
   return (
