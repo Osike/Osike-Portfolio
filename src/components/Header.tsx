@@ -9,11 +9,12 @@ const sections = [
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
+  { id: 'event', label: 'Event' },
 ];
 
 export const Header: React.FC = () => {
   const [isDark, setIsDark] = useDarkMode();
-  const activeSection = useScrollSpy(['hero', 'about', 'projects', 'skills', 'education', 'philosophy', 'contact']);
+  const activeSection = useScrollSpy(['hero', 'about', 'projects', 'skills', 'education', 'philosophy', 'contact','event']);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
