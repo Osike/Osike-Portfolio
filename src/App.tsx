@@ -1,4 +1,3 @@
-import React from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -11,11 +10,12 @@ import { Articles } from './components/Articles';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
+
 function App() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors">
       <Header />
-      <main>
+            <main>
         <Hero />
         <About />
         <Projects />
@@ -23,7 +23,7 @@ function App() {
         <Education />
         <Philosophy />
         <Events />
-        <Articles/>
+        <Articles />
         <Contact />
       </main>
       <Footer />

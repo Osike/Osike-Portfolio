@@ -4,9 +4,17 @@ import {
   EnvelopeIcon, 
   PhoneIcon,
 } from '@heroicons/react/24/outline';
-import { Instagram, Linkedin, Mail, MessageCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { Instagram, Linkedin, Mail, MessageCircle, Github } from 'lucide-react';
 
 export const Contact: React.FC = () => {
+  const form = React.useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,10 +23,29 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    if (!form.current) return;
+
+    setIsSubmitting(true);
+    setSubmissionStatus(null);
+
+    // !!! IMPORTANT !!!
+    // Replace these with your actual EmailJS Service ID, Template ID, and Public Key
+    const serviceID = 'service_wijy3il';
+    const templateID = 'template_6tcv8vs';
+    const publicKey = 'u3rj0Cd53f7nkm2og';
+
+    emailjs.sendForm(serviceID, templateID, form.current, publicKey)
+      .then((result) => {
+        console.log('SUCCESS!', result.text);
+        setSubmissionStatus({ success: true, message: 'Your message has been sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
+      }, (error) => {
+        console.log('FAILED...', error.text);
+        setSubmissionStatus({ success: false, message: 'Failed to send message. Please try again later.' });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -55,9 +82,9 @@ export const Contact: React.FC = () => {
     },
     {
       name: 'Github',
-      icon :<github className="w-6 h-6"/>,
-      url: 'https://github/osike',
-      color:'hover:text-black-500',
+      icon: <Github className="w-6 h-6" />,
+      url: 'https://github.com/osike',
+      color: 'hover:text-gray-800 dark:hover:text-white',
     },
   
   ];
@@ -88,7 +115,7 @@ export const Contact: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Name
@@ -136,12 +163,18 @@ export const Contact: React.FC = () => {
               
               <motion.button
                 type="submit"
-                className="w-full py-4 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors shadow-lg"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={isSubmitting}
+                className="w-full py-4 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </motion.button>
+              {submissionStatus && (
+                <div className={`mt-4 text-center p-2 rounded-lg ${submissionStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  {submissionStatus.message}
+                </div>
+              )}
             </form>
           </motion.div>
 

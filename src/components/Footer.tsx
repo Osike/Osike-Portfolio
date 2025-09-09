@@ -15,12 +15,12 @@ const brands = [
     logo: '/logos/afiya-pal.png',
   },
   {
-    name: 'Logistics SaaS',
-    logo: 'public/trucklogo.png',
+    name: 'Sendy',
+    logo: '/trucklogo.png',
   },
   {
     name: 'Noorzam',
-    logo: 'public/noorzam.png',
+    logo: '/noorzam.png',
   },
   {
     name: 'TechHub',

@@ -7,7 +7,7 @@ export const Philosophy: React.FC = () => {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="public/group.jpg"
+          src="/group.jpg"
           alt="Technology Innovation"
           className="w-full h-full object-cover"
         />
