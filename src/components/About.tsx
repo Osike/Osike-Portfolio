@@ -22,8 +22,9 @@ export const About: React.FC = () => {
             <div className="relative z-10">
               <img
                 src="/osike.jpg"
-                alt="Shadrack Osike"
+                alt="Shadrack Osike - Software Engineer and Tech Entrepreneur profile picture"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+                loading="lazy"
               />
             </div>
             <div className="absolute -top-4 -left-4 w-full h-full bg-teal-200 dark:bg-teal-800 rounded-2xl -z-10" />
@@ -37,12 +38,12 @@ export const About: React.FC = () => {
             className="space-y-6"
           >
             <h2 className="text-4xl font-bold text-navy dark:text-white mb-8">
-              About Me
+              About <span className="text-teal-500">Osike</span>
             </h2>
             
             <div className="space-y-6 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
               <p>
-                As Co-founder of LoyaltyTracker, I bring a unique blend of entrepreneurial vision 
+                I'm <strong>Shadrack Osike</strong>, Co-founder of LoyaltyTracker. I bring a unique blend of entrepreneurial vision 
                 and technical expertise to every project. My journey in technology is driven by a 
                 passion for creating solutions that make a real difference in people's lives.
               </p>

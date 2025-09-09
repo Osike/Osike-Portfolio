@@ -63,8 +63,9 @@ export const Footer: React.FC = () => {
               >
                 <img
                   src={brand.logo}
-                  alt={brand.name}
+                  alt={`${brand.name} - Collaboration with Shadrack Osike`}
                   className="h-12 w-auto object-contain filter brightness-75 hover:brightness-100 transition-all duration-300"
+                  loading="lazy"
                 />
               </motion.div>
             ))}
@@ -77,7 +78,7 @@ export const Footer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 mb-4 md:mb-0">
-              © 2025 Osike. All rights reserved.
+              © 2025 Shadrack Osike. All rights reserved.
             </div>
             
             <div className="flex space-x-6">

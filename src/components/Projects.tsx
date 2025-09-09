@@ -60,10 +60,10 @@ export const Projects: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-navy dark:text-white mb-4">
-            Projects I've Worked On
+            <span className="text-teal-500">Osike's</span> Projects
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-lg max-w-3xl mx-auto">
-            A showcase of my technical expertise across different technologies and domains
+            A showcase of Shadrack Osike's technical expertise across different technologies and domains
           </p>
         </motion.div>
 

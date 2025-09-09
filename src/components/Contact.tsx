@@ -100,7 +100,7 @@ export const Contact: React.FC = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-navy dark:text-white mb-4">
-            Let's Work Together
+            Contact <span className="text-teal-500">Shadrack Osike</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-lg">
             Ready to bring your next project to life? Let's have a conversation.
