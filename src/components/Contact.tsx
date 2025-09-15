@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   EnvelopeIcon, 
   PhoneIcon,
 } from '@heroicons/react/24/outline';
-import emailjs from '@emailjs/browser';
+import * as emailjs from '@emailjs/browser';
 import { Instagram, Linkedin, Mail, MessageCircle, Github } from 'lucide-react';
 
 export const Contact: React.FC = () => {
@@ -20,32 +20,102 @@ export const Contact: React.FC = () => {
     email: '',
     message: '',
   });
+  
+  // Initialize EmailJS
+  useEffect(() => {
+    // EmailJS v4 doesn't require initialization
+    // But to make it compatible with both v3 and v4, we'll handle both cases
+    const publicKey = 'u3rj0Cd53f7nkm2og';
+    
+    try {
+      // For v3, this method exists and is required
+      if (typeof emailjs.init === 'function') {
+        emailjs.init(publicKey);
+        console.log('EmailJS initialized (v3)');
+      } else {
+        console.log('EmailJS v4+ detected (no init required)');
+      }
+    } catch (error) {
+      console.error('Error initializing EmailJS:', error);
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.current) return;
+    if (!form.current) {
+      console.error('Form reference is null');
+      return;
+    }
+    
+    // Check honeypot field - if it's filled, it's likely a bot
+    const honeypotField = form.current.querySelector('input[name="website"]') as HTMLInputElement;
+    if (honeypotField && honeypotField.value) {
+      // Silently reject the submission but pretend it succeeded
+      console.log('Honeypot field filled, likely a bot');
+      setSubmissionStatus({ success: true, message: 'Your message has been sent successfully! I will get back to you soon.' });
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmissionStatus(null);
 
-    // !!! IMPORTANT !!!
-    // Replace these with your actual EmailJS Service ID, Template ID, and Public Key
+    // EmailJS configuration
     const serviceID = 'service_wijy3il';
     const templateID = 'template_6tcv8vs';
     const publicKey = 'u3rj0Cd53f7nkm2og';
+    
+    console.log('Attempting to send email with EmailJS');
+    console.log('Service ID:', serviceID);
+    console.log('Template ID:', templateID);
+    console.log('Form data:', {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message?.substring(0, 20) + '...' // Log first 20 chars for privacy
+    });
 
-    emailjs.sendForm(serviceID, templateID, form.current, publicKey)
-      .then((result) => {
-        console.log('SUCCESS!', result.text);
-        setSubmissionStatus({ success: true, message: 'Your message has been sent successfully!' });
-        setFormData({ name: '', email: '', message: '' });
-      }, (error) => {
-        console.log('FAILED...', error.text);
-        setSubmissionStatus({ success: false, message: 'Failed to send message. Please try again later.' });
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+    // Try with sendForm first (preferred method)
+    try {
+      emailjs.sendForm(serviceID, templateID, form.current, publicKey)
+        .then((result) => {
+          console.log('SUCCESS!', result.text);
+          setSubmissionStatus({ success: true, message: 'Your message has been sent successfully! I typically respond within 24-48 hours.' });
+          setFormData({ name: '', email: '', message: '' });
+        }, (error) => {
+          console.error('FAILED with sendForm...', error.text);
+          console.error('Error details:', error);
+          
+          // If sendForm fails, try with send as fallback
+          console.log('Trying fallback method...');
+          emailjs.send(serviceID, templateID, {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: `Portfolio Contact: ${formData.name}`
+          }, publicKey)
+            .then((result) => {
+              console.log('SUCCESS with fallback!', result.text);
+              setSubmissionStatus({ success: true, message: 'Your message has been sent successfully! I typically respond within 24-48 hours.' });
+              setFormData({ name: '', email: '', message: '' });
+            })
+            .catch((error) => {
+              console.error('FAILED with fallback too...', error);
+              setSubmissionStatus({ 
+                success: false, 
+                message: `Failed to send message. Please try again later or contact me directly at shadyabacus@gmail.com` 
+              });
+            });
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    } catch (err) {
+      console.error('Exception in emailjs call:', err);
+      setSubmissionStatus({ 
+        success: false, 
+        message: 'An unexpected error occurred. Please try again later or contact me directly at shadyabacus@gmail.com' 
       });
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -115,7 +185,40 @@ export const Contact: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form for Shadrack Osike">
+              {/* Hidden input for the subject line */}
+              <input 
+                type="hidden" 
+                name="subject" 
+                value={`Portfolio Contact: ${formData.name}`} 
+              />
+              
+              {/* Hidden input for from_name field (often required by EmailJS templates) */}
+              <input 
+                type="hidden" 
+                name="from_name" 
+                value={formData.name} 
+              />
+              
+              {/* Hidden input for to_name field (often required by EmailJS templates) */}
+              <input 
+                type="hidden" 
+                name="to_name" 
+                value="Shadrack Osike" 
+              />
+              
+              {/* Honeypot field for spam prevention */}
+              <div style={{ display: 'none' }}>
+                <label htmlFor="website">Website (Leave this empty)</label>
+                <input 
+                  type="text" 
+                  id="website" 
+                  name="website" 
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+              
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Name
@@ -127,6 +230,9 @@ export const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  placeholder="Your name"
+                  aria-required="true"
+                  aria-label="Your name"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-slate-800 text-gray-900 dark:text-white transition-colors"
                 />
               </div>
@@ -142,6 +248,9 @@ export const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  placeholder="your.email@example.com"
+                  aria-required="true"
+                  aria-label="Your email address"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-slate-800 text-gray-900 dark:text-white transition-colors"
                 />
               </div>
@@ -157,6 +266,9 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  placeholder="How can I help you with your project?"
+                  aria-required="true"
+                  aria-label="Your message to Shadrack Osike"
                   className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-slate-800 text-gray-900 dark:text-white transition-colors resize-none"
                 />
               </div>
@@ -164,6 +276,7 @@ export const Contact: React.FC = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
+                aria-label="Send message to Shadrack Osike"
                 className="w-full py-4 bg-teal-500 text-white font-semibold rounded-lg hover:bg-teal-600 transition-colors shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
@@ -171,7 +284,11 @@ export const Contact: React.FC = () => {
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </motion.button>
               {submissionStatus && (
-                <div className={`mt-4 text-center p-2 rounded-lg ${submissionStatus.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                <div 
+                  className={`mt-4 text-center p-3 rounded-lg ${submissionStatus.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100'}`}
+                  role="alert"
+                  aria-live="assertive"
+                >
                   {submissionStatus.message}
                 </div>
               )}
