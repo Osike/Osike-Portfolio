@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 
 const brands = [
   {
-    name: 'LoyaltyTracker',
-    logo: '/logos/loyaltytracker.png',
+    name: 'Barrizi',
+    logo: '/logos/Barrizi.png',
   },
   {
     name: 'Sheriac Bot',

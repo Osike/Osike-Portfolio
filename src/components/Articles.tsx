@@ -28,9 +28,9 @@ As an entrepreneur venturing into the B2B space, I've discovered that building s
 
 B2B entrepreneurship isn't just about having a great product—it's about understanding complex organizational structures, lengthy decision-making processes, and the critical importance of reliability and scalability.
 
-## Key Lessons from Building LoyaltyTracker
+## Key Lessons from Building Barrizi
 
-Through building LoyaltyTracker, I've learned that B2B success hinges on:
+Through building Barrizi, I've learned that B2B success hinges on:
 - Deep customer research and validation
 - Building relationships, not just transactions
 - Focusing on ROI and measurable outcomes

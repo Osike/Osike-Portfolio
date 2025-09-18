@@ -43,7 +43,7 @@ export const About: React.FC = () => {
             
             <div className="space-y-6 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
               <p>
-                I'm <strong>Shadrack Osike</strong>, Co-founder of LoyaltyTracker. I bring a unique blend of entrepreneurial vision 
+                I'm <strong>Shadrack Osike</strong>, Co-founder of Barrizi. I bring a unique blend of entrepreneurial vision 
                 and technical expertise to every project. My journey in technology is driven by a 
                 passion for creating solutions that make a real difference in people's lives.
               </p>
