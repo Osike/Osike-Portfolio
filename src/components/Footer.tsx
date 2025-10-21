@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const brands = [
   {
     name: 'Barrizi',
-    logo: '/logos/Barrizi.png',
+    logo: '/barrizii.png',
   },
   {
     name: 'Sheriac Bot',
@@ -15,7 +15,7 @@ const brands = [
     logo: '/logos/afiya-pal.png',
   },
   {
-    name: 'Sendy',
+    name: 'Triptrack',
     logo: '/trucklogo.png',
   },
   {
