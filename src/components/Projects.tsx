@@ -5,8 +5,8 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 const projects = [
   {
     id: 1,
-    title: 'Barrizi',
-    description: 'Barizi is an innovative platform revolutionizing sea travel, acting as a ride-sharing service like Uber or Bolt, but for the water. We connect you with a network of sea vessels, providing on-demand transport and fun-filled water activities.',
+    title: 'Barrizii',
+    description: 'Barrizii is an innovative platform revolutionizing sea travel, acting as a ride-sharing service like Uber or Bolt, but for the water. We connect you with a network of sea vessels, providing on-demand transport and fun-filled water activities.',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     category: 'MERN Stack',
   },
