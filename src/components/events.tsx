@@ -58,6 +58,16 @@ const events: Event[] = [
     linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
   },
   {
+    id: 'africastalking',
+    title: 'Africas Talking',
+    year: 2025,
+    location: 'Kenya',
+    type: 'workshop',
+    description: 'Leaning about there apis in the market',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack',
+    instagramLink: 'https://instagram.com/hp_brains'
+  },
+  {
     id: 'depin-summit-2025',
     title: 'DePIN Summit',
     year: 2025,
