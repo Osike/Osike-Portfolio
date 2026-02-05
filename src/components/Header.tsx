@@ -7,14 +7,13 @@ import { useScrollSpy } from '../hooks/useScrollSpy';
 const sections = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
-  { id: 'skills', label: 'Skills' },
   { id: 'contact', label: 'Contact' },
-  { id: 'event', label: 'Event' },
+  { id: 'events', label: 'Events & Achievements' },
 ];
 
 export const Header: React.FC = () => {
   const [isDark, setIsDark] = useDarkMode();
-  const activeSection = useScrollSpy(['hero', 'about', 'projects', 'skills', 'education', 'philosophy', 'contact','event']);
+  const activeSection = useScrollSpy(['hero', 'about', 'projects', 'education', 'philosophy', 'contact','events']);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
