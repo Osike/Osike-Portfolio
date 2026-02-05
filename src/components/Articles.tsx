@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Calendar, Clock, ArrowRight, Tag, User, Search } from 'lucide-react';
 
@@ -162,7 +163,6 @@ const categoryColors = {
 export const Articles: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [expandedArticle, setExpandedArticle] = useState<string | null>(null);
 
   const categories = [...new Set(articles.map(article => article.category))];
 
@@ -318,30 +318,17 @@ export const Articles: React.FC = () => {
                     </div>
 
                     {/* Read More Button */}
-                    <motion.button
-                      onClick={() => setExpandedArticle(expandedArticle === article.id ? null : article.id)}
-                      className="flex items-center text-amber-600 hover:text-amber-700 font-medium"
+                    <motion.div
                       whileHover={{ x: 5 }}
                     >
-                      {expandedArticle === article.id ? 'Show Less' : 'Read Full Chapter'}
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </motion.button>
-
-                    {/* Expanded Content */}
-                    {expandedArticle === article.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mt-6 pt-6 border-t border-gray-200 dark:border-slate-600"
+                      <Link
+                        to={`/articles/${article.category}`}
+                        className="flex items-center text-amber-600 hover:text-amber-700 font-medium"
                       >
-                        <div className="prose dark:prose-invert max-w-none">
-                          <pre className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {article.content}
-                          </pre>
-                        </div>
-                      </motion.div>
-                    )}
+                        Read Full Chapter
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </motion.div>
                   </div>
                 </motion.article>
               ))}
@@ -395,30 +382,17 @@ export const Articles: React.FC = () => {
                       <span>{article.author}</span>
                     </div>
 
-                    <motion.button
-                      onClick={() => setExpandedArticle(expandedArticle === article.id ? null : article.id)}
-                      className="flex items-center text-amber-600 hover:text-amber-700 font-medium text-sm"
+                    <motion.div
                       whileHover={{ x: 3 }}
                     >
-                      Read Chapter
-                      <ArrowRight className="w-4 h-4 ml-1" />
-                    </motion.button>
-
-                    {/* Expanded Content for Regular Articles */}
-                    {expandedArticle === article.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="mt-4 pt-4 border-t border-gray-200 dark:border-slate-600"
+                      <Link
+                        to={`/articles/${article.category}`}
+                        className="flex items-center text-amber-600 hover:text-amber-700 font-medium text-sm"
                       >
-                        <div className="prose dark:prose-invert max-w-none text-sm">
-                          <pre className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">
-                            {article.content}
-                          </pre>
-                        </div>
-                      </motion.div>
-                    )}
+                        Read Chapter
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      </Link>
+                    </motion.div>
                   </div>
                 </motion.article>
               ))}

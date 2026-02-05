@@ -19,6 +19,13 @@ const timeline = [
   },
   {
     type: 'experience',
+    title: 'AFRIBOT',
+    subtitle: 'Software Engineer',
+    period: 'Present',
+    description: 'Building innovative software solutions and contributing to cutting-edge technology projects.',
+  },
+  {
+    type: 'experience',
     title: 'Swahilipot Hub Foundation',
     subtitle: 'Software Engineer Intern',
     period: 'May 2025 - Aug 2025',
