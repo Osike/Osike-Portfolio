@@ -26,6 +26,10 @@ const brands = [
     name: 'TechHub',
     logo: '/logos/techhub.png',
   },
+  {
+    name: 'Timetable',
+    logo: '/timetable.png',
+  },
 ];
 
 export const Footer: React.FC = () => {

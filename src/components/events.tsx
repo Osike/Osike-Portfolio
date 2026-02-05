@@ -130,6 +130,63 @@ const events: Event[] = [
     description: 'Attended Binance Africa event exploring cryptocurrency and blockchain developments.',
     linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
   },
+  {
+    id: 'pwani-innovation-week-2025',
+    title: 'Pwani Innovation Week',
+    year: 2025,
+    location: 'Swahilipot Hub, Mombasa',
+    type: 'conference',
+    description: 'Pitched Barrizii in front of investors under the Deals den program, showcasing innovative transportation solutions.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
+  {
+    id: 'ubunifu-hackathon-2025',
+    title: 'Ubunifu Hackathon',
+    year: 2025,
+    location: 'Westerwalle Startup House, Mombasa',
+    type: 'hackathon',
+    achievement: '3rd Place',
+    description: 'Developed Afrimote and secured 3rd place in this competitive hackathon event.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
+  {
+    id: 'gdg-pwani-devfest-2025',
+    title: 'GDG Pwani Dev Fest',
+    year: 2025,
+    location: 'Lights International School, Mombasa',
+    type: 'conference',
+    description: 'Participated in Google Developer Group Pwani\'s annual developer festival in December.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
+  {
+    id: 'supabase-meetup-2025',
+    title: 'Supabase Meet Up',
+    year: 2025,
+    location: 'Mombasa',
+    type: 'meetup',
+    description: 'Connected with developers at the Supabase meetup, exploring modern backend solutions.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
+  {
+    id: 'git-github-workshop-2025',
+    title: 'Git and GitHub Workshop',
+    year: 2025,
+    location: 'Technical University of Mombasa',
+    type: 'workshop',
+    description: 'Hosted an online workshop on Git and GitHub fundamentals under Google Developer Groups (GDG) on Campus, helping students master version control.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
+
+  // 2026 Events
+  {
+    id: 'gdg-dar-es-salaam-2026',
+    title: 'GDG Dar-es-salaam Dev Fest',
+    year: 2026,
+    location: 'University of Dar-es-salaam',
+    type: 'conference',
+    description: 'Attended Google Developer Group Dar-es-salaam\'s developer festival in January 2026.',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack'
+  },
 
   // 2024 Events
   {
