@@ -1,6 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+
+const TypingText: React.FC<{ text: string; speed?: number; delay?: number; className?: string }> = ({ 
+  text, 
+  speed = 50, 
+  delay = 0,
+  className = ''
+}) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    if (displayedText.length < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText(text.slice(0, displayedText.length + 1));
+      }, speed);
+      return () => clearTimeout(timer);
+    } else {
+      setIsComplete(true);
+    }
+  }, [displayedText, text, speed]);
+
+  return (
+    <motion.p
+      className={className}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay }}
+    >
+      {displayedText}
+      {!isComplete && (
+        <motion.span
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+          className="ml-1 inline-block w-0.5 h-6 bg-current"
+        />
+      )}
+    </motion.p>
+  );
+};
+
+const FallingText: React.FC<{ text: string; delay?: number; className?: string }> = ({ 
+  text, 
+  delay = 0,
+  className = ''
+}) => {
+  return (
+    <motion.h1 className={className}>
+      {text.split('').map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: -500, rotateZ: 10 }}
+          animate={{ opacity: 1, y: 0, rotateZ: 0 }}
+          transition={{ 
+            duration: 0.8, 
+            delay: delay + index * 0.05,
+            type: 'spring',
+            stiffness: 100,
+            damping: 12,
+            mass: 0.5
+          }}
+          style={{ display: 'inline-block' }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </motion.h1>
+  );
+};
 
 export const Hero: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
@@ -46,14 +114,11 @@ export const Hero: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.h1
+          <FallingText
+            text="Shadrack Osike"
+            delay={0.5}
             className="text-5xl md:text-7xl font-bold text-navy dark:text-white mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Shadrack Osike
-          </motion.h1>
+          />
           
           <motion.p
             className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6"
@@ -64,14 +129,12 @@ export const Hero: React.FC = () => {
             Tech Entrepreneur & Full-Stack Developer
           </motion.p>
           
-          <motion.p
+          <TypingText
+            text="Transforming the future of technology through innovation and purpose-driven solutions"
+            speed={30}
+            delay={0.6}
             className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Transforming the future of technology through innovation and purpose-driven solutions
-          </motion.p>
+          />
 
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
