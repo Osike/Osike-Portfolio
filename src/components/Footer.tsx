@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
             </div>
             
             <div className="flex space-x-6">
-              {['About', 'Projects', 'Skills', 'Contact'].map((section) => (
+              {['About', 'Projects', 'Contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section.toLowerCase())}
