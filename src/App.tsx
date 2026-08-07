@@ -10,10 +10,7 @@ import { Events } from './components/events';
 import { Articles } from './components/Articles';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
-import Entrepreneurship from './articles/entrepreneurship';
-import Development from './articles/development';
-import Insights from './articles/insights';
-import Tech from './articles/tech';
+import ArticlePage from './articles/ArticlePage';
 
 function App() {
   return (
@@ -36,14 +33,10 @@ function App() {
             <Footer />
           </div>
         } />
-        <Route path="/articles/entrepreneurship" element={<Entrepreneurship />} />
-        <Route path="/articles/development" element={<Development />} />
-        <Route path="/articles/insights" element={<Insights />} />
-        <Route path="/articles/tech" element={<Tech />} />
+        <Route path="/articles/:slug" element={<ArticlePage />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-

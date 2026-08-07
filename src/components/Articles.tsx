@@ -2,155 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Calendar, Clock, ArrowRight, Tag, User, Search } from 'lucide-react';
-
-interface Article {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  publishDate: string;
-  readTime: number;
-  category: 'entrepreneurship' | 'b2b' | 'tech' | 'development' | 'insights';
-  tags: string[];
-  featured?: boolean;
-}
-
-const articles: Article[] = [
-  {
-    id: 'b2b-entrepreneurship-2025',
-    title: 'Building B2B Solutions: The Entrepreneurial Journey in Enterprise Software',
-    excerpt: 'Exploring the complexities and opportunities in B2B entrepreneurship, from understanding enterprise needs to scaling solutions that drive business transformation.',
-    content: `# Building B2B Solutions: The Entrepreneurial Journey
-
-As an entrepreneur venturing into the B2B space, I've discovered that building solutions for businesses requires a fundamentally different approach than B2C products. The stakes are higher, the sales cycles longer, but the impact can be transformational.
-
-## Understanding the B2B Landscape
-
-B2B entrepreneurship isn't just about having a great product—it's about understanding complex organizational structures, lengthy decision-making processes, and the critical importance of reliability and scalability.
-
-## Key Lessons from Building Barrizi
-
-Through building Barrizi, I've learned that B2B success hinges on:
-- Deep customer research and validation
-- Building relationships, not just transactions
-- Focusing on ROI and measurable outcomes
-- Creating solutions that integrate with existing workflows
-
-## The Future of B2B Innovation
-
-The future belongs to B2B solutions that combine technical excellence with deep industry understanding...`,
-    author: 'Shadrack Osike',
-    publishDate: '2025-08-15',
-    readTime: 8,
-    category: 'entrepreneurship',
-    tags: ['B2B', 'Entrepreneurship', 'SaaS', 'Business Strategy'],
-    featured: true
-  },
-  {
-    id: 'truck-management-development',
-    title: 'Developing a Truck Management System: From Concept to Implementation',
-    excerpt: 'A technical deep-dive into building a comprehensive truck management system, covering logistics optimization, real-time tracking, and fleet management challenges.',
-    content: `# Developing a Truck Management System
-
-Currently in development, our truck management system represents the intersection of logistics expertise and modern technology stack.
-
-## Technical Architecture
-
-Built using the MERN stack with Django backend services, the system handles:
-- Real-time GPS tracking
-- Route optimization algorithms
-- Maintenance scheduling
-- Driver management
-- Fuel consumption analytics
-
-## Key Challenges
-
-The logistics industry presents unique challenges:
-- Real-time data synchronization across multiple devices
-- Handling offline functionality for remote areas
-- Integrating with existing fleet management systems
-- Ensuring data accuracy for compliance reporting
-
-## Integration Strategy
-
-We're slowly integrating various components to create a comprehensive solution that addresses the complete logistics workflow...`,
-    author: 'Shadrack Osike',
-    publishDate: '2025-08-10',
-    readTime: 12,
-    category: 'development',
-    tags: ['Logistics', 'MERN Stack', 'Real-time Systems', 'Fleet Management'],
-    featured: true
-  },
-  {
-    id: 'african-tech-ecosystem',
-    title: 'The Rising African Tech Ecosystem: Opportunities and Challenges',
-    excerpt: 'Analyzing the rapid growth of the African tech scene, from fintech innovations to the challenges entrepreneurs face in scaling across diverse markets.',
-    content: `# The Rising African Tech Ecosystem
-
-Having participated in numerous tech events across Kenya and Africa, I've witnessed firsthand the incredible growth and potential of our tech ecosystem.
-
-## Key Growth Areas
-
-The African tech scene is experiencing unprecedented growth in:
-- Fintech and mobile money solutions
-- AgriTech addressing food security
-- HealthTech improving medical access
-- EdTech democratizing education
-
-## Challenges We Face
-
-Despite the growth, several challenges persist:
-- Limited access to funding
-- Infrastructure limitations
-- Talent retention issues
-- Regulatory uncertainties
-
-## Success Stories and Lessons
-
-From participating in events like DjangoCon Africa and various innovation weeks, I've learned that success in African tech requires understanding local contexts while thinking globally...`,
-    author: 'Shadrack Osike',
-    publishDate: '2025-08-05',
-    readTime: 10,
-    category: 'insights',
-    tags: ['African Tech', 'Innovation', 'Entrepreneurship', 'Market Analysis'],
-    featured: false
-  },
-  {
-    id: 'hackathon-lessons',
-    title: 'Lessons from Winning Hackathons: Strategy, Execution, and Team Dynamics',
-    excerpt: 'Insights gained from participating in multiple hackathons, including the winning strategies that led to success at Kachiri Code Hackathon 2025.',
-    content: `# Lessons from Winning Hackathons
-
-Having participated in numerous hackathons, from ICP events to winning the Kachiri Code Hackathon, I've learned that success requires more than just coding skills.
-
-## Winning Strategies
-
-The key elements that consistently lead to hackathon success:
-- Problem selection and validation
-- Team composition and dynamics
-- Time management and prioritization
-- Effective presentation and storytelling
-
-## Technical Excellence vs. Business Value
-
-Many teams focus solely on technical complexity, but judges often look for:
-- Real-world problem-solving
-- Market potential
-- User experience design
-- Implementation feasibility
-
-## Building Under Pressure
-
-Hackathons teach valuable lessons about rapid prototyping and working under pressure...`,
-    author: 'Shadrack Osike',
-    publishDate: '2025-07-28',
-    readTime: 6,
-    category: 'tech',
-    tags: ['Hackathons', 'Competition', 'Team Building', 'Rapid Prototyping'],
-    featured: false
-  }
-];
+import { articles } from '../data/articles';
 
 const categoryColors = {
   entrepreneurship: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
@@ -322,7 +174,7 @@ export const Articles: React.FC = () => {
                       whileHover={{ x: 5 }}
                     >
                       <Link
-                        to={`/articles/${article.category}`}
+                        to={`/articles/${article.id}`}
                         className="flex items-center text-amber-600 hover:text-amber-700 font-medium"
                       >
                         Read Full Chapter
@@ -386,7 +238,7 @@ export const Articles: React.FC = () => {
                       whileHover={{ x: 3 }}
                     >
                       <Link
-                        to={`/articles/${article.category}`}
+                        to={`/articles/${article.id}`}
                         className="flex items-center text-amber-600 hover:text-amber-700 font-medium text-sm"
                       >
                         Read Chapter

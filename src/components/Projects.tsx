@@ -6,41 +6,38 @@ const projects = [
   {
     id: 1,
     title: 'Barrizii',
-    description: 'Barrizii is an innovative platform revolutionizing sea travel, acting as a ride-sharing service like Uber or Bolt, but for the water. We connect you with a network of sea vessels, providing on-demand transport and fun-filled water activities.',
+    description: 'Kenya’s boat booking platform for verified sea tours — fishing trips, snorkeling, sunset cruises, and water sports along the coast. Transparent pricing with licensed, insured operators.',
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     category: 'MERN Stack',
+    url: 'https://barrizii.com',
   },
   {
     id: 2,
-    title: 'Sheriac Bot',
-    description: 'Intelligent chatbot solution with natural language processing for customer service automation.',
-    tech: ['Python', 'Django', 'AI/ML', 'PostgreSQL'],
-    category: 'Django & Python',
+    title: 'Afiya Pal',
+    description: 'AI-powered public health platform for Africa — symptom checker, trusted health education, community events, and pathways to verified doctors. Free, 24/7, in English and Swahili.',
+    tech: ['React', 'Node.js', 'MongoDB', 'AI/ML'],
+    category: 'MERN Stack',
+    url: 'https://www.afiyapal.co.ke/',
   },
   {
     id: 3,
-    title: 'Afiya Pal',
-    description: 'Healthcare companion app providing personalized medical assistance and appointment scheduling.',
-    tech: ['React Native', 'Node.js', 'MongoDB', 'Firebase'],
+    title: 'Trip-Trac',
+    description: 'Logistics and trip tracking system for fleet operations — manage trucks, drivers, customers, and trips with a live dashboard for revenue, fleet utilization, and route activity.',
+    tech: ['React', 'TypeScript', 'PostgreSQL', 'Supabase'],
     category: 'MERN Stack',
+    url: 'https://trip-trac.vercel.app/',
   },
   {
     id: 4,
-    title: 'Logistics SaaS Platform',
-    description: 'End-to-end logistics management system with route optimization and inventory tracking.',
-    tech: ['Python', 'Django', 'PostgreSQL', 'Redis'],
-    category: 'Django & Python',
-  },
-  {
-    id: 5,
-    title: 'Noorzam Website',
-    description: 'Modern e-commerce platform with seamless shopping experience and payment integration.',
-    tech: ['React', 'Node.js', 'Stripe', 'MongoDB'],
+    title: 'ICP Project',
+    description: 'Website for Islamic Community Project (ICP) — a Kenyan nonprofit delivering clean water, orphan care, education scholarships, health support, and community infrastructure.',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     category: 'MERN Stack',
+    url: 'https://islamiccommunityproject.co.ke/',
   },
 ];
 
-const categories = ['All', 'MERN Stack', 'Django & Python'];
+const categories = ['All', 'MERN Stack'];
 
 export const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -137,13 +134,16 @@ export const Projects: React.FC = () => {
                     ))}
                   </div>
                   
-                  <motion.button
-                    className="w-full py-3 bg-teal-500 text-white font-medium rounded-full hover:bg-teal-600 transition-colors"
+                  <motion.a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full py-3 bg-teal-500 text-white font-medium rounded-full hover:bg-teal-600 transition-colors text-center"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     Learn More
-                  </motion.button>
+                  </motion.a>
                 </div>
               </motion.div>
             ))}

@@ -1,6 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { SunIcon, MoonIcon, DocumentArrowDownIcon } from '@heroicons/react/24/outline';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  SunIcon,
+  MoonIcon,
+  DocumentArrowDownIcon,
+  ChevronDownIcon,
+} from '@heroicons/react/24/outline';
 import { useDarkMode } from '../hooks/useDarkMode';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
@@ -8,27 +13,67 @@ const sections = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
   { id: 'contact', label: 'Contact' },
+];
+
+const journeyItems = [
   { id: 'events', label: 'Events & Achievements' },
+  { id: 'articles', label: 'Chapter Archives' },
 ];
 
 export const Header: React.FC = () => {
   const [isDark, setIsDark] = useDarkMode();
-  const activeSection = useScrollSpy(['hero', 'about', 'projects', 'education', 'philosophy', 'contact','events']);
+  const [isJourneyOpen, setIsJourneyOpen] = useState(false);
+  const journeyRef = useRef<HTMLDivElement>(null);
+  const activeSection = useScrollSpy([
+    'hero',
+    'about',
+    'projects',
+    'education',
+    'philosophy',
+    'events',
+    'articles',
+    'contact',
+  ]);
+
+  const isJourneyActive =
+    activeSection === 'events' || activeSection === 'articles';
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsJourneyOpen(false);
   };
 
   const downloadCV = () => {
-    // Replace with actual CV URL
     const link = document.createElement('a');
     link.href = '/cv.pdf';
     link.download = 'Shadrack_Osike_CV.pdf';
     link.click();
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        journeyRef.current &&
+        !journeyRef.current.contains(event.target as Node)
+      ) {
+        setIsJourneyOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsJourneyOpen(false);
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
 
   return (
     <motion.header
@@ -46,7 +91,7 @@ export const Header: React.FC = () => {
             Shadrack Osike
           </motion.div>
 
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {sections.map((section) => (
               <motion.button
                 key={section.id}
@@ -62,6 +107,56 @@ export const Header: React.FC = () => {
                 {section.label}
               </motion.button>
             ))}
+
+            <div ref={journeyRef} className="relative">
+              <motion.button
+                type="button"
+                onClick={() => setIsJourneyOpen((open) => !open)}
+                aria-expanded={isJourneyOpen}
+                aria-haspopup="true"
+                className={`inline-flex items-center gap-1 text-sm font-medium transition-colors ${
+                  isJourneyActive
+                    ? 'text-teal-400'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-navy dark:hover:text-white'
+                }`}
+                whileHover={{ y: -2 }}
+                whileTap={{ y: 0 }}
+              >
+                Events & Achievements
+                <ChevronDownIcon
+                  className={`w-4 h-4 transition-transform ${
+                    isJourneyOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </motion.button>
+
+              <AnimatePresence>
+                {isJourneyOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 min-w-[220px] rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg py-2"
+                  >
+                    {journeyItems.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => scrollToSection(item.id)}
+                        className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                          activeSection === item.id
+                            ? 'text-teal-500 bg-teal-50 dark:bg-teal-950/40'
+                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-navy dark:hover:text-white'
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="flex items-center space-x-4">

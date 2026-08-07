@@ -14,6 +14,70 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: 'wavemakers-journey',
+    title: 'Wavemakers: Building Barrizii Inside Westerwelle Startup Haus',
+    excerpt: 'My journey through Wavemakers — a structured entrepreneurship cohort at Westerwelle Startup Haus Mombasa — and how mentorship, peer learning, and coastal community are shaping Barrizii.',
+    content: `# Wavemakers: Building Barrizii Inside Westerwelle Startup Haus
+
+Building a startup on Kenya's coast can feel lonely. You have the idea, the product, and the late nights — but not always the room, the network, or the discipline to grow with intention. That is why joining **Wavemakers**, sponsored and delivered by **Westerwelle Startup Haus Mombasa**, has been such a defining chapter in my journey with Barrizii.
+
+![Wavemakers cohort at Westerwelle Startup Haus](/wavemakers1.JPG)
+
+## What Wavemakers Is
+
+Wavemakers is not a one-day workshop. It is a multi-month capacity-building cohort for entrepreneurs, women leaders, and community builders across the Kenyan Coast. Through structured learning, mentorship, and peer accountability, the programme strengthens how we run our businesses — from pricing and financial management to marketing, governance, and pitching.
+
+For me, it arrived at the right moment: Barrizii was already live as a boat-booking platform for verified sea tours, and I needed sharper business systems to match the product we were shipping.
+
+## Mentorship in the Room
+
+Some of the most useful moments are not on stage — they are around a table with other founders, unpacking revenue, operations, and impact until the whiteboard looks like a tree of hard questions.
+
+![Wavemakers mentorship session around the table](/wavemekrmentorship.jpeg)
+
+That peer energy is the point of Wavemakers: you leave with clearer models for how your business actually makes money and delivers results.
+
+## Why Westerwelle Startup Haus Matters
+
+Westerwelle Startup Haus Mombasa has become more than a venue. It is a hub where coastal founders meet mentors, challenge each other's assumptions, and stay accountable. Being in that room reminded me that Barrizii is not just a codebase — it is a business that has to serve operators, travellers, and the blue economy around Mombasa and beyond.
+
+Having a sponsor and institutional home like Westerwelle Startup Haus also signals something important: coastal entrepreneurship deserves serious infrastructure, not leftover attention from Nairobi-first ecosystems.
+
+## Modules That Stick
+
+Sessions dig into organisational reality — how decisions get made, who is accountable, and how founders turn intention into systems. Module conversations like these force you to stop building in isolation and start leading with clarity.
+
+![Workshop module on decision-making and accountability at Westerwelle Startup Haus](/wavemakers.JPG)
+
+## What I Am Learning in the Cohort
+
+The sessions have been practical, not theoretical. A few themes keep showing up in my own work:
+
+- **Price with intention** — knowing costs, value, and margins so the business pays you, not the other way around
+- **Talk to customers like a founder, not only like a developer** — validating boat operators' and travellers' real workflows
+- **Build systems, not just features** — governance, financial hygiene, and clear go-to-market habits
+- **Lean on peers** — founders on the Coast face similar constraints; sharing them shortens the learning curve
+
+These lessons feed directly into how I prioritise Barrizii: verified operators, transparent pricing, and a booking experience people can trust.
+
+## Barrizii Inside the Wave
+
+Wavemakers gives Barrizii a context. When I pitch sea travel and coastal tourism tech, I am no longer explaining the problem alone — I am refining it with mentors and founders who understand Mombasa's market realities. That peer pressure is healthy. It pushes me to measure progress in customers served and systems improved, not only in commits pushed.
+
+## Looking Ahead
+
+I am still early in documenting this chapter, and I will keep updating it as the cohort unfolds — milestones, hard lessons, and the small wins that rarely make it into a LinkedIn post.
+
+If you are building from the Coast, find rooms like this. Programmes like Wavemakers, backed by Westerwelle Startup Haus, turn isolated hustle into shared momentum. That is the wave I am riding — and Barrizii is the vessel.`,
+    author: 'Shadrack Osike',
+    publishDate: '2026-08-07',
+    readTime: 7,
+    category: 'entrepreneurship',
+    tags: ['Wavemakers', 'Westerwelle Startup Haus', 'Barrizii', 'Entrepreneurship', 'Mombasa'],
+    image: '/wavemakers1.JPG',
+    featured: true
+  },
+  {
     id: 'b2b-entrepreneurship-2025',
     title: 'Building B2B Solutions: The Entrepreneurial Journey in Enterprise Software',
     excerpt: 'Exploring the complexities and opportunities in B2B entrepreneurship, from understanding enterprise needs to scaling solutions that drive business transformation.',
