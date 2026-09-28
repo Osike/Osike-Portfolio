@@ -116,50 +116,50 @@ In my experience, the key to success lies in patience, persistence, and a genuin
   },
   {
     id: 'truck-management-development',
-    title: 'Developing a Truck Management System: From Concept to Implementation',
-    excerpt: 'A technical deep-dive into building a comprehensive truck management system, covering logistics optimization, real-time tracking, and fleet management challenges.',
-    content: `# Developing a Truck Management System
+    title: 'Transforming Fleet Management: The Evolution of the Trip-Trac Logistics System',
+    excerpt: 'A technical deep-dive into Trip-Trac’s present capabilities — SMS, email, and WhatsApp alerts plus flexible reporting — and a vision for AI-driven fleet automation.',
+    content: `# Transforming Fleet Management: The Evolution of the Trip-Trac Logistics System
 
-Currently in development, our truck management system represents the intersection of logistics expertise and modern technology stack.
+A technical deep-dive into present capabilities and a vision for AI-driven automation.
 
-![Development Hero](/development-hero.jpg)
+In the fast-paced world of global supply chains, visibility, communication, and data accessibility are no longer just operational advantages — they are absolute necessities. The Trip-Trac Logistics System stands at the forefront of this digital shift. Developed as a high-performance web application, Trip-Trac bridges the gap between complex logistical operations and real-time stakeholder communication. By providing instantaneous updates and tailored reporting, the platform empowers fleet managers, drivers, and clients to stay synchronized at every milestone of a journey.
 
-## Technical Architecture
+![Trip-Trac dashboard](/triptrac-dashboard.jpg)
 
-Built using the MERN stack with Django backend services, the system handles:
-- Real-time GPS tracking
-- Route optimization algorithms
-- Maintenance scheduling
-- Driver management
-- Fuel consumption analytics
+## Present Capabilities: Omnichannel Notifications & Flexible Reporting
 
-## Key Challenges
+At its core, Trip-Trac is built to eliminate the communication blind spots that traditionally plague freight and transit management. Today, the system boasts a robust, multi-channel alerting infrastructure designed to deliver trip status updates the moment they happen. Rather than forcing users to constantly refresh a dashboard, Trip-Trac pushes critical information directly to users' preferred communication networks:
 
-The logistics industry presents unique challenges:
-- Real-time data synchronization across multiple devices
-- Handling offline functionality for remote areas
-- Integrating with existing fleet management systems
-- Ensuring data accuracy for compliance reporting
+- **SMS Notifications:** Delivering lightweight, instant cellular alerts directly to drivers and field supervisors, ensuring connectivity even in areas with limited internet data coverage.
+- **Email Alerts:** Providing comprehensive, documented milestone check-ins, ideal for corporate records, billing departments, and audit trails.
+- **WhatsApp Integration:** Leveraging the world's most accessible messaging application to send rich status alerts, ETAs, and interactive trip notifications directly to clients and operators worldwide.
 
-![System Architecture](/system-architecture.jpg)
+Beyond real-time alerting, Trip-Trac features a sophisticated reporting engine dedicated to truck and trip summaries. Maintenance reports break down profit per trip, fuel, mileage, and upkeep so dispatchers can see which routes actually make money.
 
-## Integration Strategy
+![Trip-Trac maintenance and profitability reports](/triptrac-maintenance.jpg)
 
-We're slowly integrating various components to create a comprehensive solution that addresses the complete logistics workflow. This includes predictive maintenance using machine learning and automated reporting for regulatory compliance.
+Recognizing that data needs vary wildly between a warehouse dispatcher and an executive officer, the platform offers ultimate flexibility in report delivery through two distinct mechanisms:
 
-The development process has taught us valuable lessons about balancing technical innovation with practical usability. Every feature we implement is designed to solve a real pain point for fleet managers and drivers alike.
+1. **Manual On-Demand Triggers:** With a simple click, administrators can compile and pull down-to-the-minute summaries of specific trucks, active routes, or completed dispatches, allowing for agile decision-making during operational anomalies.
+2. **Automated Scheduled Dispatch:** Users can configure the system to compile and broadcast reports automatically at custom intervals (e.g., daily close-outs or weekly performance audits), delivering insights directly to key stakeholders without manual intervention.
 
-## Future Enhancements
+## The Road Ahead: Transitioning into an AI-Powered Ecosystem
 
-Looking ahead, we're planning to incorporate AI-driven route optimization and blockchain-based secure data sharing. These advancements will position our system at the cutting edge of logistics technology.
+While Trip-Trac's current communication and reporting framework offers a highly competitive solution for modern logistics, the long-term roadmap focuses on shifting the platform from a reactive management tool to a proactive, intelligent ecosystem. Future iterations of Trip-Trac will natively integrate Artificial Intelligence (AI) and Machine Learning models to redefine fleet efficiency. Upcoming innovations include:
 
-This project exemplifies how software development can transform traditional industries, creating efficiencies that were previously unimaginable.`,
+- **Predictive Delay Forecasting:** By ingestion of historical transit logs, live weather data, traffic telemetry, and border crossing congestion patterns, the AI engine will anticipate delays before they happen, adjusting ETAs dynamically and warning clients via the platform's multi-channel alert network.
+- **Intelligent Route & Fuel Optimization:** Machine learning algorithms will automatically evaluate thousands of route permutations to recommend the most resource-efficient paths, accounting for vehicle health, load weights, and road topographies.
+- **Automated Anomaly Detection:** AI will continuously scan automated trip summaries and tracking logs to flag irregular behaviors — such as unexplained idle times, unauthorized route deviations, or unexpected fuel drops — instantly notifying dispatchers via automated WhatsApp or SMS triggers.
+
+## Conclusion
+
+By masterfully balancing the practical communication demands of today with a visionary AI strategy for tomorrow, Trip-Trac is positioned to become an indispensable hub for supply chain management. The integration of instant SMS, Email, and WhatsApp infrastructure ensures immediate operational control, while the planned AI transformation promises to turn raw logistical telemetry into unparalleled predictive intelligence.`,
     author: 'Shadrack Osike',
-    publishDate: '2025-08-10',
-    readTime: 12,
+    publishDate: '2026-09-28',
+    readTime: 6,
     category: 'development',
-    tags: ['Logistics', 'MERN Stack', 'Real-time Systems', 'Fleet Management'],
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=400&fit=crop',
+    tags: ['Trip-Trac', 'Logistics', 'Fleet Management', 'Notifications', 'AI'],
+    image: '/triptrac-login.jpg',
     featured: true
   },
   {

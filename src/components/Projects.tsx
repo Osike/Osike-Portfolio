@@ -26,6 +26,7 @@ const projects = [
     tech: ['React', 'TypeScript', 'PostgreSQL', 'Supabase'],
     category: 'MERN Stack',
     url: 'https://trip-trac.vercel.app/',
+    image: '/triptrac-dashboard.jpg',
   },
   {
     id: 4,
@@ -106,6 +107,14 @@ export const Projects: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: project.id * 0.1 }}
               >
+                {'image' in project && project.image && (
+                  <img
+                    src={project.image}
+                    alt={`${project.title} dashboard`}
+                    className="w-full h-44 object-cover object-left-top bg-black"
+                    loading="lazy"
+                  />
+                )}
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-bold text-navy dark:text-white">

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   SunIcon,
@@ -24,6 +25,8 @@ export const Header: React.FC = () => {
   const [isDark, setIsDark] = useDarkMode();
   const [isJourneyOpen, setIsJourneyOpen] = useState(false);
   const journeyRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
   const activeSection = useScrollSpy([
     'hero',
     'about',
@@ -39,11 +42,17 @@ export const Header: React.FC = () => {
     activeSection === 'events' || activeSection === 'articles';
 
   const scrollToSection = (sectionId: string) => {
+    setIsJourneyOpen(false);
+
+    if (location.pathname !== '/') {
+      navigate({ pathname: '/', hash: sectionId });
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsJourneyOpen(false);
   };
 
   const downloadCV = () => {
