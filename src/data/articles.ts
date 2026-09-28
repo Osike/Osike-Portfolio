@@ -14,6 +14,71 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: 'afribot-robotics',
+    title: 'From Console Logs to Chassis: My Journey Bridging Software and Robotics at Afribot',
+    excerpt: 'How training engineers at Afribot Robotics in Mombasa changed the way I teach logic — when a bug is no longer a console message, but a robot hitting a wall.',
+    content: `# From Console Logs to Chassis: My Journey Bridging Software and Robotics at Afribot
+
+For years, my life as a technical trainer existed entirely within the digital realm. My students and I lived in code editors, debugged syntax errors on glowing screens, and found satisfaction when a console finally printed "Hello, World!" or returned a successful API call.
+
+It was rewarding work. But recently, I stepped away from the strict abstraction of software development to take on a new challenge: training the next generation of engineers at Afribot Robotics here in Mombasa.
+
+The transition from pure software to robotics wasn't just a career change; it was a fundamental shift in how I view technology education. It forced me to rethink how I teach logic, problem-solving, and the very nature of a "bug."
+
+## The Instant Feedback Loop: When Code Breaks in 3D
+
+In software training, a logic error usually means a clean, quiet error message pops up in an IDE. You identify the line, correct the syntax, and hit run again. It's safe, immediate, and forgiving.
+
+In robotics, a logic error has physical consequences.
+
+When I first started at Afribot, I had to adapt my training style to this new reality. I remember one of my interns was working on a simple obstacle-avoiding robot. They had written the logic for the ultrasonic sensor, but inverted the motor control signal by mistake.
+
+When the bot sensed a wall, instead of reversing, it accelerated full speed into the wall.
+
+The classroom went quiet. There was no soft error message; there was a crash. My intern looked at me, terrified they had broken the hardware.
+
+I just smiled. "That," I said, "is your debugging moment. The code is doing exactly what you told it to do, but your logic didn't account for the physical output."
+
+That crash taught them more about conditional logic (if/else statements) in five seconds than an hour of me lecturing on the topic. The lesson was immediate, tactile, and unforgettable. Robotics provides the ultimate, tangible feedback loop.
+
+## Translating Abstract Logic into Tangible Motion
+
+A common struggle in software training is getting beginners to grasp abstract concepts. How do you explain a "variable" in a way that sticks?
+
+At Afribot, I found that robotics makes the abstract concrete.
+
+When we train students on how to program a robotic arm to pick up an object, suddenly variables are no longer just placeholders; they are real-world coordinates — X, Y, and Z positions in 3D space. Loops aren't just lines of repeated code; they are the precise, rhythmic movements required to turn a servo motor degree by degree.
+
+![Training session at Afribot, holding a robot chassis and walking through the mechanical layout](/afribot-training.jpg)
+
+As seen in the photo above, which captures me during a training session holding one of our Afribot chassis, explaining the mechanical layout, every component — every wire, motor, and sensor — is a physical manifestation of a line of code. Seeing the students' faces light up when their code commands a motor to turn, or when they successfully read data from an accelerometer, is pure magic. It is the moment the digital world asserts its control over the physical one.
+
+## The Interdisciplinary Mindset: More Than Just Code
+
+My background in software development has been invaluable at Afribot, but it also highlighted how much more robotics requires. Software developers can often get away with ignoring hardware limitations. Robotics engineers do not have that luxury.
+
+I have had to evolve from being just a "coding trainer" into a facilitator of an interdisciplinary mindset.
+
+When training interns, I emphasize that they must now wear three hats simultaneously:
+
+- **The Software Engineer:** Writing clean, modular code for the microcontroller.
+- **The Electronics Engineer:** Understanding voltage, current, and wiring sensors correctly so they don't burn out the board.
+- **The Mechanical Engineer:** Considering torque, friction, center of gravity, and the physical structure of the robot.
+
+Teaching software gave me the pedagogical foundation — how to scaffold information, manage a classroom of diverse skill levels, and break down complex problems. But teaching robotics at Afribot has shown me the power of integrating these skills.
+
+We are not just training coders or builders; we are training holistic problem-solvers who understand that technology is not just software or hardware — it is the elegant combination of both to create something that interacts with the world.
+
+The road ahead for automation and technology in Africa is incredibly bright, and I am proud to be at Afribot, mentoring the young builders who will define that future.`,
+    author: 'Shadrack Osike',
+    publishDate: '2026-09-28',
+    readTime: 6,
+    category: 'insights',
+    tags: ['Afribot', 'Robotics', 'Training', 'Mombasa', 'Education'],
+    image: '/afribot-training.jpg',
+    featured: true
+  },
+  {
     id: 'wavemakers-journey',
     title: 'Wavemakers: Building Barrizii Inside Westerwelle Startup Haus',
     excerpt: 'My journey through Wavemakers — a structured entrepreneurship cohort at Westerwelle Startup Haus Mombasa — and how mentorship, peer learning, and coastal community are shaping Barrizii.',

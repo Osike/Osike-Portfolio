@@ -51,6 +51,7 @@ const ArticlePage: React.FC = () => {
   }
 
   const isLoginHero = article.image?.includes('triptrac-login');
+  const isPortraitHero = article.image?.includes('afribot-training');
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors pt-16">
@@ -64,7 +65,16 @@ const ArticlePage: React.FC = () => {
           />
         </section>
       )}
-      {article.image && !isLoginHero && (
+      {isPortraitHero && (
+        <section className="bg-slate-900">
+          <img
+            src={article.image}
+            alt="Shadrack Osike training at Afribot Robotics"
+            className="w-full max-h-[70vh] object-cover object-top mx-auto"
+          />
+        </section>
+      )}
+      {article.image && !isLoginHero && !isPortraitHero && (
         <section className="relative h-96 overflow-hidden">
           <img
             src={article.image}
@@ -82,7 +92,7 @@ const ArticlePage: React.FC = () => {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-lg dark:prose-invert mx-auto">
           <header className={`${article.image ? 'text-center' : ''} mb-8`}>
-            {(!article.image || isLoginHero) && (
+            {(!article.image || isLoginHero || isPortraitHero) && (
               <h1 className="text-4xl font-bold text-navy dark:text-white mb-4">
                 {article.title}
               </h1>
