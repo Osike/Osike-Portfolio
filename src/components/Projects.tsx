@@ -10,6 +10,7 @@ const projects = [
     tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     category: 'MERN Stack',
     url: 'https://barrizii.com',
+    image: '/barrizii-home.jpg',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ const projects = [
     tech: ['React', 'Node.js', 'MongoDB', 'AI/ML'],
     category: 'MERN Stack',
     url: 'https://www.afiyapal.co.ke/',
+    image: '/afiyapal-home.jpg',
   },
   {
     id: 3,
@@ -110,8 +112,10 @@ export const Projects: React.FC = () => {
                 {'image' in project && project.image && (
                   <img
                     src={project.image}
-                    alt={`${project.title} dashboard`}
-                    className="w-full h-44 object-cover object-left-top bg-black"
+                    alt={`${project.title} preview`}
+                    className={`w-full h-44 object-cover bg-black ${
+                      project.image.includes('triptrac') ? 'object-left-top' : 'object-top'
+                    }`}
                     loading="lazy"
                   />
                 )}

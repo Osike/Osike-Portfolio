@@ -8,14 +8,6 @@ const brands = [
     logo: '/barrizii.png',
   },
   {
-    name: 'Sheriac Bot',
-    logo: '/logos/sheriac-bot.png',
-  },
-  {
-    name: 'Afiya Pal',
-    logo: '/logos/afiya-pal.png',
-  },
-  {
     name: 'Triptrack',
     logo: '/trucklogo.png',
   },
@@ -69,7 +61,7 @@ export const ArticleFooter: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 mb-4 md:mb-0">
-              © 2025 Shadrack Osike. All rights reserved.
+              © 2026 Shadrack Osike. All rights reserved.
             </div>
 
             <div className="flex space-x-6">
