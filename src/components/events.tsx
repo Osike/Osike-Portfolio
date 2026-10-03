@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Trophy, Users, ExternalLink, Award } from 'lucide-react';
+import { BookOpen, Calendar, MapPin, Trophy, Users, ExternalLink, Award } from 'lucide-react';
 
 interface Event {
   id: string;
@@ -11,6 +12,7 @@ interface Event {
   achievement?: string;
   description: string;
   image?: string;
+  articleId?: string;
   linkedinLink?: string;
   instagramLink?: string;
 }
@@ -178,6 +180,18 @@ const events: Event[] = [
   },
 
   // 2026 Events
+  {
+    id: 'africas-talking-hackathon-2026',
+    title: "Africa's Talking Hackathon",
+    year: 2026,
+    location: 'Kenya',
+    type: 'hackathon',
+    achievement: '1st Runners-Up',
+    description: 'Built Chapaa, an AI anti-fraud platform for scam checks and biometric SIM-swap KYC, and finished 1st runners-up.',
+    articleId: 'chapaa-africas-talking',
+    linkedinLink: 'https://linkedin.com/posts/osike-shadrack',
+    instagramLink: 'https://instagram.com/hp_brains'
+  },
   {
     id: 'gdg-dar-es-salaam-2026',
     title: 'GDG Dar-es-salaam Dev Fest',
@@ -444,8 +458,16 @@ export const Events: React.FC = () => {
                           {event.description}
                         </p>
 
-                        {/* Social Links */}
-                        <div className="flex space-x-3">
+                        <div className="flex flex-wrap gap-x-3 gap-y-2">
+                          {event.articleId && (
+                            <Link
+                              to={`/articles/${event.articleId}`}
+                              className="flex items-center space-x-2 text-amber-600 hover:text-amber-700 text-sm font-medium"
+                            >
+                              <BookOpen className="w-4 h-4" />
+                              <span>Read Chapter</span>
+                            </Link>
+                          )}
                           {event.linkedinLink && (
                             <motion.a
                               href={event.linkedinLink}

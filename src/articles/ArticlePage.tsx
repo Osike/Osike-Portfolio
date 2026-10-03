@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
 import { ArticleFooter } from '../components/ArticleFooter';
 import { articles } from '../data/articles';
+import { ChapaaArchitecture } from './ChapaaArchitecture';
 
 const categoryColors: Record<string, string> = {
   entrepreneurship: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
@@ -19,6 +20,50 @@ const categoryDefaults: Record<string, string> = {
   insights: 'african-tech-ecosystem',
   tech: 'hackathon-lessons',
 };
+
+const markdownComponents = {
+  pre: ({ children }: { children?: React.ReactNode }) => (
+    <pre className="overflow-x-auto rounded-xl bg-slate-950 text-slate-100 text-sm leading-relaxed p-4 my-6">
+      {children}
+    </pre>
+  ),
+  code: ({ className, children }: { className?: string; children?: React.ReactNode }) =>
+    className ? (
+      <code className="font-mono text-sm">{children}</code>
+    ) : (
+      <code className="rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-sm font-mono">
+        {children}
+      </code>
+    ),
+  img: ({ src, alt }: { src?: string; alt?: string }) => (
+    <img
+      src={src}
+      alt={alt ?? ''}
+      className={`w-full rounded-2xl shadow-lg my-8 ${
+        String(src).includes('triptrac-')
+          ? 'object-contain bg-black'
+          : 'object-cover max-h-[520px]'
+      }`}
+      loading="lazy"
+    />
+  ),
+};
+
+function ArticleBody({ content }: { content: string }) {
+  const marker = '{{chapaa-architecture}}';
+  if (!content.includes(marker)) {
+    return <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>;
+  }
+
+  const [before, after] = content.split(marker);
+  return (
+    <>
+      <ReactMarkdown components={markdownComponents}>{before}</ReactMarkdown>
+      <ChapaaArchitecture />
+      <ReactMarkdown components={markdownComponents}>{after}</ReactMarkdown>
+    </>
+  );
+}
 
 const ArticlePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -129,25 +174,8 @@ const ArticlePage: React.FC = () => {
               ))}
             </div>
           </header>
-          <div className="text-gray-700 dark:text-gray-300 leading-relaxed [&_img]:my-8 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-lg [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-navy dark:[&_h2]:text-white [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mb-2 [&_strong]:text-navy dark:[&_strong]:text-white">
-            <ReactMarkdown
-              components={{
-                img: ({ src, alt }) => (
-                  <img
-                    src={src}
-                    alt={alt ?? ''}
-                    className={`w-full rounded-2xl shadow-lg my-8 ${
-                      String(src).includes('triptrac-')
-                        ? 'object-contain bg-black'
-                        : 'object-cover max-h-[520px]'
-                    }`}
-                    loading="lazy"
-                  />
-                ),
-              }}
-            >
-              {article.content}
-            </ReactMarkdown>
+          <div className="text-gray-700 dark:text-gray-300 leading-relaxed [&_img]:my-8 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-lg [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-navy dark:[&_h2]:text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-navy dark:[&_h3]:text-white [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-2 [&_strong]:text-navy dark:[&_strong]:text-white">
+            <ArticleBody content={article.content} />
           </div>
         </article>
       </main>

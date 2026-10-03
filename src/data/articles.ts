@@ -14,6 +14,109 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: 'chapaa-africas-talking',
+    title: "Building Chapaa: How We Won 1st Runners-Up at the Africa's Talking Hackathon",
+    excerpt: "A deep dive into Chapaa, an AI-powered anti-fraud platform with IoT edge cameras for biometric KYC and multi-channel telecom alerts — and how it finished 1st runners-up.",
+    content: `# Building Chapaa: How We Won 1st Runners-Up at the Africa's Talking Hackathon
+
+Mobile financial fraud remains one of the most pervasive security challenges in Kenya. From sophisticated M-Pesa phishing texts — "wrong number" reversals, fake loan fees, and urgent prize wins — to unauthorized SIM swaps that bypass traditional security, everyday mobile subscribers face constant exposure.
+
+At the Africa's Talking Hackathon, our team set out to build a solution that bridges complex telecom telemetry with an accessible, user-first experience. We created **Chapaa** — a secure platform that gives users instant, AI-driven scam analysis, delivered by SMS or an interactive voice call, and biometric KYC for SIM swap requests.
+
+We finished **1st runners-up**. This chapter walks through the problem, the architecture, the IoT and AI pieces, and the people in the room.
+
+## The Problem Space
+
+Mobile money in East Africa is fast and woven into daily life, which makes it a prime target. Two threat vectors stood out:
+
+- **SMS and phishing scams.** Fraudsters send texts that mimic official providers and push people to reveal PINs, one-time passwords, or ID numbers.
+- **SIM swap fraud.** Someone moves a victim's number onto a new SIM, intercepts authentication codes, and drains the wallet.
+
+Chapaa sits between those attacks and the subscriber. It combines automated text parsing, an LLM threat check, IoT computer vision, biometric verification, and direct telecom notifications.
+
+## Spam Message Checker
+
+Users paste a suspicious message into the platform. No screenshot upload, and no OCR step.
+
+- **Automated extraction.** The backend pulls links, phone numbers, Paybill and Till numbers, amounts, and sender IDs.
+- **Rules engine.** Flags explicit requests for a PIN or OTP.
+- **Reported entity lookup.** Checks numbers and links the community has already flagged.
+- **Link reputation.** Compares URLs against threat-intelligence feeds.
+- **LLM classifier.** Asks a language model for a structured verdict — \`LIKELY_SCAM\`, \`SUSPICIOUS\`, or \`NO_RED_FLAGS_FOUND\` — with a confidence score and advice the user can act on.
+
+The result goes back through Africa's Talking SMS or an interactive voice call, depending on what the user prefers.
+
+## SIM Swap with Biometric KYC
+
+A swap request does not reach the carrier until it clears a security gate.
+
+- **IoT edge cameras.** For physical or agent-assisted swaps, AI cameras capture facial geometry and liveness instead of relying only on a browser upload.
+- **DeepFace pipeline.** A Python FastAPI service runs DeepFace for similarity matching and liveness. Images are purged after the check. What remains is the score, the result, and an audit timestamp.
+- **Africa's Talking Insights.** Only a passed KYC check calls \`checkSimSwapState\` to read the carrier risk level.
+- **Secure confirmation.** A one-time code then goes out by SMS, WhatsApp, or voice before the swap is recorded.
+
+## Architecture
+
+Chapaa was built using a decoupled architecture optimized for type safety, speed, and real-time telecom webhooks.
+
+{{chapaa-architecture}}
+
+## One Notification Helper
+
+Telecom calls live in a single module so SMS, voice, and WhatsApp stay consistent:
+
+\`\`\`typescript
+import AfricasTalking from "africastalking";
+
+const at = AfricasTalking({
+  apiKey: process.env.AT_API_KEY!,
+  username: process.env.AT_USERNAME!,
+});
+
+export const sms = at.SMS;
+export const voice = at.VOICE;
+export const insights = at.INSIGHTS;
+export const whatsapp = at.WHATSAPP;
+
+export async function notify(
+  phone: string,
+  channel: "sms" | "call" | "whatsapp",
+  text: string
+) {
+  if (channel === "sms") {
+    return sms.send({ to: [phone], message: text });
+  }
+  if (channel === "call") {
+    await savePendingVoiceMessage(phone, text);
+    return voice.call({
+      callFrom: process.env.AT_VOICE_NUMBER!,
+      callTo: [phone],
+    });
+  }
+}
+\`\`\`
+
+## The Room
+
+The result mattered. So did the work happening around us.
+
+Ali Hasham showed a bulk-payments flow that replaces manual sends: upload a CSV, then send. Other teams were reworking intercity bus booking in Kenya around USSD, so the same trip can be reserved from a feature phone on a thin connection.
+
+That is the useful pressure of a hackathon. You leave thinking harder about ordinary problems on the continent, not only about the demo you shipped.
+
+## What Is Next for Chapaa
+
+- **Live telco.** Move the Africa's Talking integration off sandbox shortcodes.
+- **Hardware.** Tighten the camera pipeline for agent booths and telecom retail shops.
+- **Language.** Voice prompts and model instructions that handle Swahili slang and regional dialects.`,
+    author: 'Shadrack Osike',
+    publishDate: '2026-10-04',
+    readTime: 8,
+    category: 'tech',
+    tags: ['Chapaa', "Africa's Talking", 'Hackathon', 'Fraud', 'KYC'],
+    featured: true
+  },
+  {
     id: 'afribot-robotics',
     title: 'From Console Logs to Chassis: My Journey Bridging Software and Robotics at Afribot',
     excerpt: 'How training engineers at Afribot Robotics in Mombasa changed the way I teach logic — when a bug is no longer a console message, but a robot hitting a wall.',
