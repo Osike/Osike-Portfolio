@@ -1,199 +1,98 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  SunIcon,
-  MoonIcon,
-  DocumentArrowDownIcon,
-  ChevronDownIcon,
-} from '@heroicons/react/24/outline';
-import { useDarkMode } from '../hooks/useDarkMode';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { useScrollSpy } from '../hooks/useScrollSpy';
+import { useSectionNav } from '../hooks/useSectionNav';
 
-const sections = [
+const links = [
   { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects' },
+  { id: 'projects', label: 'Work' },
+  { id: 'education', label: 'Journey' },
+  { id: 'events', label: 'Field log' },
+  { id: 'articles', label: 'Chapters' },
   { id: 'contact', label: 'Contact' },
 ];
 
-const journeyItems = [
-  { id: 'events', label: 'Events & Achievements' },
-  { id: 'articles', label: 'Chapter Archives' },
-];
+const spyIds = ['hero', ...links.map((link) => link.id)];
 
 export const Header: React.FC = () => {
-  const [isDark, setIsDark] = useDarkMode();
-  const [isJourneyOpen, setIsJourneyOpen] = useState(false);
-  const journeyRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const activeSection = useScrollSpy([
-    'hero',
-    'about',
-    'projects',
-    'education',
-    'philosophy',
-    'events',
-    'articles',
-    'contact',
-  ]);
-
-  const isJourneyActive =
-    activeSection === 'events' || activeSection === 'articles';
-
-  const scrollToSection = (sectionId: string) => {
-    setIsJourneyOpen(false);
-
-    if (location.pathname !== '/') {
-      navigate({ pathname: '/', hash: sectionId });
-      return;
-    }
-
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const downloadCV = () => {
-    const link = document.createElement('a');
-    link.href = '/cv.pdf';
-    link.download = 'Shadrack_Osike_CV.pdf';
-    link.click();
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
+  const goTo = useSectionNav();
+  const { pathname } = useLocation();
+  const activeSection = useScrollSpy(spyIds);
+  const active = pathname.startsWith('/articles') ? 'articles' : activeSection;
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        journeyRef.current &&
-        !journeyRef.current.contains(event.target as Node)
-      ) {
-        setIsJourneyOpen(false);
-      }
-    };
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsJourneyOpen(false);
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
   }, []);
 
+  const go = (id: string) => {
+    setMenuOpen(false);
+    goTo(id);
+  };
+
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-gray-200 dark:border-slate-700"
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold text-navy dark:text-white cursor-pointer"
-            onClick={() => scrollToSection('hero')}
-          >
-            Shadrack Osike
-          </motion.div>
+    <>
+      <header className="o-nav">
+        <div className="o-wrap o-nav-inner">
+          <button type="button" className="o-brand" onClick={() => go('hero')}>
+            <span className="o-brand-mark">S</span>
+            <span className="o-brand-name">Shadrack Osike</span>
+          </button>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {sections.map((section) => (
-              <motion.button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`text-sm font-medium transition-colors ${
-                  activeSection === section.id
-                    ? 'text-teal-400'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-navy dark:hover:text-white'
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
-              >
-                {section.label}
-              </motion.button>
-            ))}
-
-            <div ref={journeyRef} className="relative">
-              <motion.button
+          <nav className="o-nav-links" aria-label="Main">
+            {links.map((link) => (
+              <button
+                key={link.id}
                 type="button"
-                onClick={() => setIsJourneyOpen((open) => !open)}
-                aria-expanded={isJourneyOpen}
-                aria-haspopup="true"
-                className={`inline-flex items-center gap-1 text-sm font-medium transition-colors ${
-                  isJourneyActive
-                    ? 'text-teal-400'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-navy dark:hover:text-white'
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
+                className={active === link.id ? 'is-on' : ''}
+                onClick={() => go(link.id)}
               >
-                Events & Achievements
-                <ChevronDownIcon
-                  className={`w-4 h-4 transition-transform ${
-                    isJourneyOpen ? 'rotate-180' : ''
-                  }`}
-                />
-              </motion.button>
+                {link.label}
+              </button>
+            ))}
+          </nav>
 
-              <AnimatePresence>
-                {isJourneyOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 min-w-[220px] rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg py-2"
-                  >
-                    {journeyItems.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => scrollToSection(item.id)}
-                        className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                          activeSection === item.id
-                            ? 'text-teal-500 bg-teal-50 dark:bg-teal-950/40'
-                            : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-navy dark:hover:text-white'
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+          <button type="button" className="o-btn o-btn-primary" onClick={() => go('contact')}>
+            Let’s talk <span aria-hidden="true">→</span>
+          </button>
 
-          <div className="flex items-center space-x-4">
-            <motion.button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isDark ? (
-                <SunIcon className="w-5 h-5 text-yellow-500" />
-              ) : (
-                <MoonIcon className="w-5 h-5 text-slate-600" />
-              )}
-            </motion.button>
-
-            <motion.button
-              onClick={downloadCV}
-              className="inline-flex items-center px-4 py-2 bg-teal-500 text-white text-sm font-medium rounded-full hover:bg-teal-600 transition-colors"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <DocumentArrowDownIcon className="w-4 h-4 mr-2" />
-              Download CV
-            </motion.button>
-          </div>
+          <button
+            type="button"
+            className="o-burger"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-      </nav>
-    </motion.header>
+      </header>
+
+      {menuOpen && (
+        <div className="o-menu" role="dialog" aria-label="Menu">
+          {links.map((link, index) => (
+            <button key={link.id} type="button" onClick={() => go(link.id)}>
+              {link.label}
+              <span>{String(index + 1).padStart(2, '0')}</span>
+            </button>
+          ))}
+          <button type="button" className="o-btn o-btn-primary" onClick={() => go('contact')}>
+            Let’s talk →
+          </button>
+        </div>
+      )}
+    </>
   );
 };

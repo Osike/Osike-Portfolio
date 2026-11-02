@@ -1,112 +1,88 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import { useSectionNav } from '../hooks/useSectionNav';
+import { events } from '../data/events';
+import { articles } from '../data/articles';
+import { projects } from '../data/projects';
+
+const toolkit = ['MongoDB', 'Express', 'React', 'Node.js', 'Django', 'Python', 'TypeScript', 'PostgreSQL'];
+
+const podiums = events.filter((event) =>
+  /winner|runner|place|position/i.test(event.achievement ?? '')
+).length;
+
+const stats = [
+  { n: String(projects.length), l: 'Products shipped' },
+  { n: String(podiums), l: 'Hackathon podiums' },
+  { n: `${events.length}`, l: 'Events, talks & workshops' },
+  { n: String(articles.length).padStart(2, '0'), l: 'Chapters written' },
+];
 
 export const Hero: React.FC = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const goTo = useSectionNav();
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-700/25 bg-[size:60px_60px] opacity-30" />
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full mix-blend-multiply filter blur-xl opacity-20"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, -100, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 20 + i * 2,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-            style={{
-              background: i % 2 === 0 ? '#64FFDA' : '#0A192F',
-              width: `${120 + i * 20}px`,
-              height: `${120 + i * 20}px`,
-              left: `${10 + i * 15}%`,
-              top: `${20 + i * 10}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
+    <section id="hero" className="o-wrap">
+      <div className="o-hero">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
-          <motion.h1
-            className="text-5xl md:text-7xl font-bold text-navy dark:text-white mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Shadrack Osike
-          </motion.h1>
-          
-          <motion.p
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            Tech Entrepreneur & Full-Stack Developer
-          </motion.p>
-          
-          <motion.p
-            className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Transforming the future of technology through innovation and purpose-driven solutions
-          </motion.p>
+          <div className="o-kicker">
+            <span className="o-dot" />
+            Software engineer · Founder of Barrizii · Mombasa, Kenya
+          </div>
+          <h1>
+            Building tech that solves <em>real problems.</em>
+          </h1>
+          <p className="o-hero-dek">
+            I’m Shadrack Osike — a full-stack developer and entrepreneur turning everyday African
+            problems into products people actually use: from sea tours and public health to fleets
+            and fraud prevention.
+          </p>
+          <div className="o-hero-ctas">
+            <button type="button" className="o-btn o-btn-primary" onClick={() => goTo('projects')}>
+              See selected work <span aria-hidden="true">→</span>
+            </button>
+            <button type="button" className="o-btn o-btn-ghost" onClick={() => goTo('articles')}>
+              Read the chapters
+            </button>
+          </div>
+        </motion.div>
 
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              className="px-8 py-4 bg-teal-500 text-white font-semibold rounded-full hover:bg-teal-600 transition-colors shadow-lg"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              View My Work
-            </motion.button>
-            
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              className="px-8 py-4 border-2 border-navy dark:border-white text-navy dark:text-white font-semibold rounded-full hover:bg-navy hover:text-white dark:hover:bg-white dark:hover:text-navy transition-colors"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Contact Me
-            </motion.button>
-          </motion.div>
+        <motion.div
+          className="o-portrait"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+        >
+          <div className="o-portrait-block" />
+          <img src="/pik.jpg" alt="Shadrack Osike, software engineer and founder of Barrizii" />
+          <div className="o-portrait-tag">
+            <small>Currently</small>
+            <strong>CEO &amp; Founder, BARRIZII</strong>
+          </div>
         </motion.div>
       </div>
 
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <ChevronDownIcon className="w-8 h-8 text-gray-400" />
-      </motion.div>
+      <div className="o-stats">
+        {stats.map((stat) => (
+          <div key={stat.l} className="o-stat">
+            <div className="o-stat-n">{stat.n}</div>
+            <div className="o-stat-l">{stat.l}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="o-toolkit">
+        <span>Core toolkit</span>
+        {toolkit.map((tool) => (
+          <span key={tool} className="o-chip">
+            {tool}
+          </span>
+        ))}
+      </div>
     </section>
   );
 };

@@ -14,6 +14,99 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: 'africastalking-mombasa',
+    title: "Building Practical Communication Tools with Africa's Talking: Reflections from Mombasa",
+    excerpt: 'On 24 October 2026 I facilitated an Africa’s Talking session in Mombasa — SMS, USSD, and webhooks for developers, founders, and students, plus a panel on building beyond the code.',
+    content: `On 24 October 2026 I facilitated an Africa's Talking session in Mombasa. It was a genuinely rewarding room: developers, founders, students, and technology enthusiasts who wanted to see how SMS, USSD, and webhooks become real products for Kenyan users and businesses. The session was hands-on, and it stayed on one idea — communication infrastructure should be accessible to every builder.
+
+Africa's Talking gives developers a simpler way to add communication to an application: APIs for SMS, USSD, Voice, WhatsApp, Airtime, and Mobile Data. In Mombasa that landed clearly. A useful service does not need a complex app or expensive infrastructure to start. It can begin with an SMS notification, a USSD menu, or a webhook that answers when a user does something. The session was the [Discover Africa's Talking info session for developers in Mombasa](https://community.africastalking.com/events/details/africas-talking-africas-talking-open-community-east-africa-hub-presents-discover-africas-talking-info-session-for-developers-in-mombasa/cohost-africas-talking-community/).
+
+## Why This Session Mattered
+
+The workshop stayed on tools that solve everyday problems in Kenya and across Africa. SMS is still one of the most reliable ways to reach a customer. USSD reaches people on a basic phone, with no internet. Webhooks tie those channels to a modern application by letting an outside system push real-time data to a developer's server.
+
+For businesses in tourism, logistics, retail, education, and community services, that is booking confirmations, payment alerts, customer support, reminders, surveys, and mobile self-service.
+
+## What We Covered
+
+### SMS with the Africa's Talking API
+
+We started with SMS because it is the easiest entry point. With the Africa's Talking SMS API and the Python SDK, participants sent messages from code, looked at delivery feedback, and treated SMS as more than a notification beep.
+
+The starter repository for this part is [Osike/ATsmsapi](https://github.com/Osike/ATsmsapi).
+
+The point was the short path from idea to a working messaging flow: booking confirmations, alerts, OTPs, or a promotional update, delivered straight to the phone.
+
+### USSD: Services That Work on Any Phone
+
+USSD was one of the most engaging parts of the afternoon. A user dials a code and walks a menu. No smartphone app, and no mobile data. Africa's Talking's USSD gateway is built to take a high volume of concurrent API requests, so a developer can put a USSD application up quickly.
+
+The starter repository is [Osike/ussdAT](https://github.com/Osike/ussdAT).
+
+We talked through uses that fit the Coast and the rest of the country:
+
+- Checking availability for boat rides or tours
+- Registering for an event or a service
+- Collecting customer feedback
+- Showing account or order status
+- A simple service menu for a business that does not have a mobile app yet
+
+Africa's Talking posts the session to your callback URL: session ID, service code, phone number, and what the user just typed. The application answers with \`CON\` to keep the session open or \`END\` to close it.
+
+### Webhooks: Real-Time Events into the Application
+
+A webhook is a URL your server exposes so another system can send data when something happens. In this ecosystem, callbacks carry delivery reports, incoming messages, and USSD interactions.
+
+The starter repository is [Osike/webhooks](https://github.com/Osike/webhooks).
+
+This is the shift from a static app to a reactive one. Nobody has to poll for a new message or a delivery update. The event arrives, and the backend can write the database, notify an admin, send a confirmation, or start the next workflow.
+
+## Panel Discussion: Building Beyond the Code
+
+The panel with **Emmanuel Madanga**, CEO of Beyond Data ICT, and **Issack** was one of the most useful parts of the day. The technical sessions showed *how* to build. The panel asked *why* we build, *who* we build for, and what it takes to turn a demo into impact.
+
+Technical skill is not enough. You also need the problem, the user, the business model, and the local context. Emmanuel and Issack pushed the room to write solutions that are useful, sustainable, and relevant to real communities.
+
+- **Start with a real problem.** Technology should meet a clear need, not only show what is possible.
+- **Design for accessibility.** SMS and USSD reach people who may not have a smartphone, stable internet, or comfort with apps.
+- **Build with the community.** How people communicate, pay, and decide is the brief.
+- **Think like a builder and an entrepreneur.** A demo is a start. A product needs iteration, feedback, distribution, and persistence.
+- **Collaboration creates opportunity.** Mombasa's tech ecosystem gets stronger when developers, businesses, mentors, and community leaders work in the same room.
+
+Innovation is not only APIs, repositories, and deployments. It is technology tied to daily life, and solutions that can grow into businesses.
+
+## The Bigger Lesson
+
+The strongest products in that room did not start complicated. A first version can be a short chain:
+
+- A customer sends a message.
+- A USSD menu walks them through the service.
+- A webhook updates the system as it happens.
+- An SMS confirms the action.
+
+That chain can run a booking platform, a support tool, a community service, or a business workflow.
+
+## Resources Shared
+
+- [Session slides on Canva](https://canva.link/7mkugcqt7xrpwdt)
+- [Webhooks repository](https://github.com/Osike/webhooks)
+- [USSD repository](https://github.com/Osike/ussdAT)
+- [SMS API repository](https://github.com/Osike/ATsmsapi)
+
+The slides are there for anyone who wants to review the material, keep experimenting, or pass the session on. Africa's Talking also offers a free sandbox where you can test SMS, USSD, payments, voice, and airtime in a simulator before production.
+
+## Closing Thought
+
+Mombasa has a growing community of builders who know local problems and are ready to ship practical digital services. Sessions like this turn abstract APIs into skills, and conversations into collaboration. I hope people left with working examples and with the confidence to make communication simpler and more useful for the people around them.`,
+    author: 'Shadrack Osike',
+    publishDate: '2026-10-24',
+    readTime: 8,
+    category: 'tech',
+    tags: ["Africa's Talking", 'Mombasa', 'SMS', 'USSD', 'Webhooks'],
+    image: '/at-mombasa/workshop-collaboration.webp',
+    featured: true
+  },
+  {
     id: 'chapaa-africas-talking',
     title: "Building Chapaa: How We Won 1st Runners-Up at the Africa's Talking Hackathon",
     excerpt: "A deep dive into Chapaa, an AI-powered anti-fraud platform with IoT edge cameras for biometric KYC and multi-channel telecom alerts — and how it finished 1st runners-up.",

@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
+import { ArrowRight } from 'lucide-react';
 import { Header } from '../components/Header';
-import { ArticleFooter } from '../components/ArticleFooter';
-import { articles } from '../data/articles';
+import { Footer } from '../components/Footer';
+import { articles, type Article } from '../data/articles';
+import {
+  categoryLabels,
+  chapterNumber,
+  formatChapterDate,
+  nextChapter,
+} from '../data/chapters';
+import { useScrollSpy } from '../hooks/useScrollSpy';
 import { ChapaaArchitecture } from './ChapaaArchitecture';
+import { AfricasTalkingMombasaStory } from './AfricasTalkingMombasaStory';
 
-const categoryColors: Record<string, string> = {
-  entrepreneurship: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-  b2b: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  tech: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  development: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
-  insights: 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200',
-};
+const ARCH_MARKER = '{{chapaa-architecture}}';
 
 const categoryDefaults: Record<string, string> = {
   entrepreneurship: 'b2b-entrepreneurship-2025',
@@ -21,47 +24,227 @@ const categoryDefaults: Record<string, string> = {
   tech: 'hackathon-lessons',
 };
 
-const markdownComponents = {
-  pre: ({ children }: { children?: React.ReactNode }) => (
-    <pre className="overflow-x-auto rounded-xl bg-slate-950 text-slate-100 text-sm leading-relaxed p-4 my-6">
-      {children}
-    </pre>
-  ),
-  code: ({ className, children }: { className?: string; children?: React.ReactNode }) =>
-    className ? (
-      <code className="font-mono text-sm">{children}</code>
-    ) : (
-      <code className="rounded bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 text-sm font-mono">
-        {children}
-      </code>
-    ),
-  img: ({ src, alt }: { src?: string; alt?: string }) => (
-    <img
-      src={src}
-      alt={alt ?? ''}
-      className={`w-full rounded-2xl shadow-lg my-8 ${
-        String(src).includes('triptrac-')
-          ? 'object-contain bg-black'
-          : 'object-cover max-h-[520px]'
-      }`}
-      loading="lazy"
-    />
-  ),
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+
+const plainHeading = (markdown: string) =>
+  markdown
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[*_`]/g, '')
+    .trim();
+
+function extractHeadings(content: string) {
+  const headings: { text: string; slug: string }[] = [];
+  let inFence = false;
+  for (const line of content.split('\n')) {
+    if (line.trim().startsWith('```')) inFence = !inFence;
+    if (inFence) continue;
+    const match = line.match(/^##\s+(.+)$/);
+    if (match) {
+      const text = plainHeading(match[1]);
+      headings.push({ text, slug: slugify(text) });
+    }
+  }
+  return headings;
+}
+
+const textOf = (node: React.ReactNode): string => {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join('');
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) return textOf(node.props.children);
+  return '';
 };
 
-function ArticleBody({ content }: { content: string }) {
-  const marker = '{{chapaa-architecture}}';
-  if (!content.includes(marker)) {
-    return <ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>;
-  }
-
-  const [before, after] = content.split(marker);
+function Figure({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
   return (
-    <>
-      <ReactMarkdown components={markdownComponents}>{before}</ReactMarkdown>
-      <ChapaaArchitecture />
-      <ReactMarkdown components={markdownComponents}>{after}</ReactMarkdown>
-    </>
+    <figure className={src.includes('triptrac-') ? 'is-contain' : ''}>
+      <img src={src} alt={alt} loading="lazy" onError={() => setFailed(true)} />
+      {alt && <figcaption>{alt}</figcaption>}
+    </figure>
+  );
+}
+
+function useMarkdownComponents(article: Article, slugs: string[]): Components {
+  return useMemo(
+    () => ({
+      h1: () => null,
+      h2: ({ children }) => {
+        const slug = slugify(plainHeading(textOf(children)));
+        const index = slugs.indexOf(slug);
+        return (
+          <h2 id={slug}>
+            {index >= 0 && <span className="o-n">{String(index + 1).padStart(2, '0')}</span>}
+            {children}
+          </h2>
+        );
+      },
+      p: ({ node, children }) => {
+        const only = node?.children.length === 1 ? node.children[0] : undefined;
+        if (only?.type === 'element' && only.tagName === 'img') return <>{children}</>;
+        return <p>{children}</p>;
+      },
+      img: ({ src, alt }) => {
+        if (!src || src === article.image) return null;
+        return <Figure src={String(src)} alt={alt ?? ''} />;
+      },
+      a: ({ href, children }) => (
+        <a href={href} target="_blank" rel="noreferrer">
+          {children}
+        </a>
+      ),
+    }),
+    [article.image, slugs]
+  );
+}
+
+function Cover({ article }: { article: Article }) {
+  const no = chapterNumber(article.id);
+  if (!article.image) {
+    return (
+      <div className="o-cover is-type">
+        <div className="o-cover-cat">
+          {categoryLabels[article.category]} · {article.tags.slice(0, 3).join(' · ')}
+        </div>
+        <div className="o-big" aria-hidden="true">
+          {no}
+        </div>
+        <div className="o-cover-lines" aria-hidden="true">
+          {[320, 240, 280, 160, 220].map((width) => (
+            <i key={width} style={{ width }} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+  const variant = article.image.includes('triptrac-login')
+    ? 'is-contain'
+    : article.image.includes('afribot-training')
+      ? 'is-top'
+      : '';
+  return (
+    <div className={`o-cover ${variant}`}>
+      <img src={article.image} alt="" />
+    </div>
+  );
+}
+
+function Chapter({ article }: { article: Article }) {
+  const headings = useMemo(() => extractHeadings(article.content), [article.content]);
+  const slugs = useMemo(() => headings.map((h) => h.slug), [headings]);
+  const components = useMarkdownComponents(article, slugs);
+  const activeSlug = useScrollSpy(slugs);
+  const no = chapterNumber(article.id);
+  const next = nextChapter(article.id);
+  const [before, after] = article.content.split(ARCH_MARKER);
+
+  return (
+    <main className="o-wrap">
+      <div className="o-crumb">
+        <Link to="/#articles">Chapters</Link> / <b>{categoryLabels[article.category]}</b>
+      </div>
+
+      <header className="o-ch-head">
+        <div className="o-ch-side">
+          <div className="o-no">{no}</div>
+          <dl>
+            <div>
+              <dt>Published</dt>
+              <dd>{formatChapterDate(article.publishDate)}</dd>
+            </div>
+            <div>
+              <dt>Reading time</dt>
+              <dd>{article.readTime} minutes</dd>
+            </div>
+            <div>
+              <dt>Category</dt>
+              <dd>{categoryLabels[article.category]}</dd>
+            </div>
+          </dl>
+        </div>
+        <div>
+          <div className="o-kicker">
+            <span className="o-dot" />
+            Chapter {no} · {categoryLabels[article.category]}
+          </div>
+          <h1 className="o-ch-title">{article.title}</h1>
+          <p className="o-ch-dek">{article.excerpt}</p>
+          <div className="o-byline">
+            <img src="/pik.jpg" alt="" />
+            <div>
+              <strong>{article.author}</strong>
+              <span>Software engineer &amp; founder, Barrizii</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <Cover article={article} />
+
+      <div className="o-ch-body">
+        <aside className="o-toc">
+          <h5>In this chapter</h5>
+          {headings.map((heading, index) => (
+            <a
+              key={heading.slug}
+              href={`#${heading.slug}`}
+              className={activeSlug === heading.slug ? 'is-on' : ''}
+              onClick={(event) => {
+                event.preventDefault();
+                document.getElementById(heading.slug)?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              <b>{String(index + 1).padStart(2, '0')}</b>
+              {heading.text}
+            </a>
+          ))}
+          <div className="o-tagset">
+            {article.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+        </aside>
+
+        <article className="o-prose">
+          <ReactMarkdown components={components}>{before}</ReactMarkdown>
+          {after !== undefined && (
+            <>
+              <ChapaaArchitecture />
+              <ReactMarkdown components={components}>{after}</ReactMarkdown>
+            </>
+          )}
+        </article>
+      </div>
+
+      <section className="o-end">
+        <div />
+        <div className="o-author">
+          <img src="/pik.jpg" alt="" />
+          <div>
+            <h5>Written by Shadrack Osike</h5>
+            <p>
+              Software engineer and founder of Barrizii. Writing chapters from the build, the field
+              and the community in Mombasa.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Link to={`/articles/${next.id}`} className="o-next">
+        <div>
+          <div className="o-kicker">Next · Chapter {chapterNumber(next.id)}</div>
+          <h3>{next.title}</h3>
+        </div>
+        <div className="o-next-go">
+          <ArrowRight size={30} />
+        </div>
+      </Link>
+    </main>
   );
 }
 
@@ -72,114 +255,27 @@ const ArticlePage: React.FC = () => {
     articles.find((a) => slug != null && a.id === categoryDefaults[slug]) ??
     articles.find((a) => a.category === slug);
 
-  if (!article) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors pt-16">
-        <Header />
-        <main className="max-w-3xl mx-auto px-4 py-24 text-center">
-          <h1 className="text-3xl font-bold text-navy dark:text-white mb-4">
+  return (
+    <div className="o-page">
+      <Header />
+      {!article ? (
+        <main className="o-wrap o-missing">
+          <div className="o-kicker">
+            <span className="o-dot" />
             Chapter not found
-          </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
-            That chapter does not exist yet — or the link may be outdated.
-          </p>
-          <Link
-            to="/#articles"
-            className="inline-flex px-6 py-3 bg-teal-500 text-white rounded-full hover:bg-teal-600 transition-colors"
-          >
-            Back to Chapter Archives
+          </div>
+          <h1 style={{ marginTop: 20 }}>This page hasn’t been written yet.</h1>
+          <p>That chapter does not exist yet — or the link may be outdated.</p>
+          <Link to="/#articles" className="o-btn o-btn-primary">
+            Back to the chapter archives
           </Link>
         </main>
-        <ArticleFooter />
-      </div>
-    );
-  }
-
-  const isLoginHero = article.image?.includes('triptrac-login');
-  const isPortraitHero = article.image?.includes('afribot-training');
-
-  return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors pt-16">
-      <Header />
-      {isLoginHero && (
-        <section className="bg-[#F5B800]">
-          <img
-            src={article.image}
-            alt="Trip-Trac sign in"
-            className="w-full max-h-[70vh] object-contain mx-auto"
-          />
-        </section>
+      ) : article.id === 'africastalking-mombasa' ? (
+        <AfricasTalkingMombasaStory />
+      ) : (
+        <Chapter key={article.id} article={article} />
       )}
-      {isPortraitHero && (
-        <section className="bg-slate-900">
-          <img
-            src={article.image}
-            alt="Shadrack Osike training at Afribot Robotics"
-            className="w-full max-h-[70vh] object-cover object-top mx-auto"
-          />
-        </section>
-      )}
-      {article.image && !isLoginHero && !isPortraitHero && (
-        <section className="relative h-96 overflow-hidden">
-          <img
-            src={article.image}
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center px-4">
-            <div className="text-center text-white max-w-4xl">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4">{article.title}</h1>
-              <p className="text-lg md:text-xl max-w-2xl mx-auto">{article.excerpt}</p>
-            </div>
-          </div>
-        </section>
-      )}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <article className="prose prose-lg dark:prose-invert mx-auto">
-          <header className={`${article.image ? 'text-center' : ''} mb-8`}>
-            {(!article.image || isLoginHero || isPortraitHero) && (
-              <h1 className="text-4xl font-bold text-navy dark:text-white mb-4">
-                {article.title}
-              </h1>
-            )}
-            <div
-              className={`flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-300 mb-4 ${
-                article.image ? 'justify-center' : ''
-              }`}
-            >
-              <span className="font-medium">{article.author}</span>
-              <span>{article.publishDate}</span>
-              <span>{article.readTime} min read</span>
-            </div>
-            <div
-              className={`flex flex-wrap gap-2 mb-6 ${
-                article.image ? 'justify-center' : ''
-              }`}
-            >
-              <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  categoryColors[article.category] ??
-                  'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                }`}
-              >
-                {article.category}
-              </span>
-              {article.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-full text-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </header>
-          <div className="text-gray-700 dark:text-gray-300 leading-relaxed [&_img]:my-8 [&_img]:w-full [&_img]:rounded-2xl [&_img]:shadow-lg [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-navy dark:[&_h2]:text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-navy dark:[&_h3]:text-white [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-2 [&_strong]:text-navy dark:[&_strong]:text-white">
-            <ArticleBody content={article.content} />
-          </div>
-        </article>
-      </main>
-      <ArticleFooter />
+      <Footer />
     </div>
   );
 };

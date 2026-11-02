@@ -1,151 +1,114 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useSectionNav } from '../hooks/useSectionNav';
+import { chaptersNewestFirst } from '../data/chapters';
 
-type Brand = {
-  name: string;
-  logo: string;
-  url?: string;
-};
-
-const brands: Brand[] = [
-  {
-    name: 'Barrizi',
-    logo: '/barrizii.png',
-    url: 'https://barrizii.com',
-  },
-  {
-    name: 'Trip-Trac',
-    logo: '/trucklogo.png',
-    url: 'https://trip-trac.vercel.app/',
-  },
-  {
-    name: 'Noorzam',
-    logo: '/noorzam.png',
-  },
-  {
-    name: 'Smart Timetable',
-    logo: '/timetable.png',
-  },
-  {
-    name: 'Loyalty Tracker',
-    logo: '/logos/loyaltytracker.png',
-  },
+const brands = [
+  { name: 'Barrizii', logo: '/barrizii.png', url: 'https://barrizii.com' },
+  { name: 'Trip-Trac', logo: '/trucklogo.png', url: 'https://trip-trac.vercel.app/' },
+  { name: 'Noorzam', logo: '/noorzam.png' },
+  { name: 'Smart Timetable', logo: '/timetable.png' },
+  { name: 'Loyalty Tracker', logo: '/logos/loyaltytracker.png' },
 ];
 
-const footerLinks = [
+const explore = [
   { id: 'about', label: 'About' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'articles', label: 'Articles' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'projects', label: 'Selected work' },
+  { id: 'education', label: 'Journey' },
+  { id: 'events', label: 'Field log' },
 ];
 
-function BrandGroup({ hidden }: { hidden?: boolean }) {
-  return (
-    <div className="flex items-center gap-12 pr-12" aria-hidden={hidden || undefined}>
-      {brands.map((brand) => {
-        const logo = (
-          <span className="flex h-16 w-40 items-center justify-center rounded-xl bg-white px-4">
-            <img
-              src={brand.logo}
-              alt={hidden ? '' : brand.name}
-              className="h-12 w-auto max-w-[140px] object-contain"
-              loading="lazy"
-            />
-          </span>
-        );
+const connect = [
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/osike-shadrack/' },
+  { label: 'GitHub', url: 'https://github.com/osike' },
+  { label: 'Instagram', url: 'https://instagram.com/hp_brains' },
+  { label: 'shadyabacus@gmail.com', url: 'mailto:shadyabacus@gmail.com' },
+];
 
-        if (!brand.url || hidden) {
-          return (
-            <div key={brand.name} className="shrink-0">
-              {logo}
+export const BrandStrip: React.FC = () => (
+  <section className="o-built" aria-label="Brands I’ve built">
+    <div className="o-wrap o-built-inner">
+      <div className="o-kicker">Brands I’ve built</div>
+      <div className="o-logos">
+        {brands.map((brand) => {
+          const content = (
+            <>
+              <img src={brand.logo} alt="" loading="lazy" />
+              {brand.name}
+            </>
+          );
+          return brand.url ? (
+            <a key={brand.name} className="o-logo" href={brand.url} target="_blank" rel="noreferrer">
+              {content}
+            </a>
+          ) : (
+            <div key={brand.name} className="o-logo">
+              {content}
             </div>
           );
-        }
-
-        return (
-          <a
-            key={brand.name}
-            href={brand.url}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={brand.name}
-            className="shrink-0 transition-transform hover:scale-105"
-          >
-            {logo}
-          </a>
-        );
-      })}
-    </div>
-  );
-}
-
-export const BrandStrip: React.FC = () => {
-  return (
-    <div className="py-12 overflow-hidden">
-      <h3 className="text-2xl font-bold text-center mb-8">
-        Brands & Collaborations
-      </h3>
-      <div className="relative">
-        <motion.div
-          className="flex w-max"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{
-            duration: 28,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        >
-          <BrandGroup />
-          <BrandGroup hidden />
-        </motion.div>
+        })}
       </div>
     </div>
-  );
-};
-
-export const FooterLinks: React.FC = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const goToSection = (sectionId: string) => {
-    if (pathname !== '/') {
-      navigate({ pathname: '/', hash: sectionId });
-      return;
-    }
-
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  return (
-    <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-      {footerLinks.map((section) => (
-        <button
-          key={section.id}
-          type="button"
-          onClick={() => goToSection(section.id)}
-          className="text-gray-300 hover:text-teal-400 transition-colors"
-        >
-          {section.label}
-        </button>
-      ))}
-    </div>
-  );
-};
+  </section>
+);
 
 export const Footer: React.FC = () => {
-  return (
-    <footer className="bg-navy dark:bg-slate-900 text-white">
-      <BrandStrip />
+  const goTo = useSectionNav();
 
-      <div className="border-t border-gray-700 dark:border-slate-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-300 mb-4 md:mb-0">
-              © 2026 Shadrack Osike. All rights reserved.
+  return (
+    <footer className="o-foot">
+      <div className="o-wrap">
+        <div className="o-foot-top">
+          <div className="o-foot-brand">
+            <div className="o-brand">
+              <span className="o-brand-mark">S</span>
+              <span className="o-brand-name">Shadrack Osike</span>
             </div>
-            <FooterLinks />
+            <p>Software engineer and founder of Barrizii, building practical technology from Mombasa, Kenya.</p>
           </div>
+          <div>
+            <h4>Explore</h4>
+            <ul>
+              {explore.map((item) => (
+                <li key={item.id}>
+                  <button type="button" onClick={() => goTo(item.id)}>
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Chapters</h4>
+            <ul>
+              {chaptersNewestFirst.slice(0, 3).map((chapter) => (
+                <li key={chapter.id}>
+                  <Link to={`/articles/${chapter.id}`}>{chapter.title.split(':')[0]}</Link>
+                </li>
+              ))}
+              <li>
+                <button type="button" onClick={() => goTo('articles')}>
+                  All chapters
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4>Connect</h4>
+            <ul>
+              {connect.map((item) => (
+                <li key={item.label}>
+                  <a href={item.url} target={item.url.startsWith('mailto') ? undefined : '_blank'} rel="noreferrer">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="o-foot-bottom">
+          <span>© {new Date().getFullYear()} Shadrack Osike. Built in Mombasa.</span>
+          <span>osikeshadrack.dev</span>
         </div>
       </div>
     </footer>
