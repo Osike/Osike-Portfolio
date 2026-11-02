@@ -16,91 +16,107 @@ export const articles: Article[] = [
   {
     id: 'africastalking-mombasa',
     title: "Building Practical Communication Tools with Africa's Talking: Reflections from Mombasa",
-    excerpt: 'On 24 October 2026 I facilitated an Africa’s Talking session in Mombasa — SMS, USSD, and webhooks for developers, founders, and students, plus a panel on building beyond the code.',
-    content: `On 24 October 2026 I facilitated an Africa's Talking session in Mombasa. It was a genuinely rewarding room: developers, founders, students, and technology enthusiasts who wanted to see how SMS, USSD, and webhooks become real products for Kenyan users and businesses. The session was hands-on, and it stayed on one idea — communication infrastructure should be accessible to every builder.
+    excerpt: 'Facilitating Africa’s Talking in Mombasa: SMS, USSD, and webhooks for real Kenyan products — plus a panel on trust, funding, and shortening the idea-to-product journey.',
+    content: `Facilitating the Africa's Talking session in Mombasa was a genuinely rewarding experience. The room brought together developers, founders, students, and technology enthusiasts eager to understand how SMS, USSD, and webhooks can be used to build real products for Kenyan users and businesses. The session was hands-on, practical, and centered on one key idea: communication infrastructure should be accessible to every builder.
 
-Africa's Talking gives developers a simpler way to add communication to an application: APIs for SMS, USSD, Voice, WhatsApp, Airtime, and Mobile Data. In Mombasa that landed clearly. A useful service does not need a complex app or expensive infrastructure to start. It can begin with an SMS notification, a USSD menu, or a webhook that answers when a user does something. The session was the [Discover Africa's Talking info session for developers in Mombasa](https://community.africastalking.com/events/details/africas-talking-africas-talking-open-community-east-africa-hub-presents-discover-africas-talking-info-session-for-developers-in-mombasa/cohost-africas-talking-community/).
+Africa's Talking gives developers a simpler way to add communication and engagement features to applications through APIs for services such as SMS, USSD, Voice, WhatsApp, Airtime, and Mobile Data. In Mombasa, that message felt especially relevant: many useful services do not need a complex app or expensive infrastructure to start—they can begin with a simple SMS notification, a USSD menu, or a webhook that responds to user activity.
 
 ## Why This Session Mattered
 
-The workshop stayed on tools that solve everyday problems in Kenya and across Africa. SMS is still one of the most reliable ways to reach a customer. USSD reaches people on a basic phone, with no internet. Webhooks tie those channels to a modern application by letting an outside system push real-time data to a developer's server.
+The workshop focused on tools that solve everyday problems in Kenya and across Africa. SMS remains one of the most reliable ways to reach customers, while USSD makes digital services accessible even on basic phones without internet connectivity. Webhooks then connect these services to modern applications by allowing external systems to send real-time data to a developer's server.
 
-For businesses in tourism, logistics, retail, education, and community services, that is booking confirmations, payment alerts, customer support, reminders, surveys, and mobile self-service.
+For local businesses—especially those in tourism, logistics, retail, education, and community services—these tools can support booking confirmations, payment alerts, customer support, reminders, surveys, and mobile self-service.
 
 ## What We Covered
 
-### SMS with the Africa's Talking API
+### 1. SMS with the Africa's Talking API
 
-We started with SMS because it is the easiest entry point. With the Africa's Talking SMS API and the Python SDK, participants sent messages from code, looked at delivery feedback, and treated SMS as more than a notification beep.
+We began with SMS because it is often the easiest entry point for developers. Using the Africa's Talking SMS API and Python SDK, participants explored how to send messages programmatically, handle delivery feedback, and think about SMS as more than a notification channel.
 
-The starter repository for this part is [Osike/ATsmsapi](https://github.com/Osike/ATsmsapi).
+I shared a starter repository for this part of the session: [Osike/ATsmsapi](https://github.com/Osike/ATsmsapi).
 
-The point was the short path from idea to a working messaging flow: booking confirmations, alerts, OTPs, or a promotional update, delivered straight to the phone.
+The goal was to show that a developer can move from idea to a working messaging workflow quickly. Whether it is sending booking confirmations, alerts, OTPs, or promotional updates, SMS remains a powerful channel for reaching users directly.
 
-### USSD: Services That Work on Any Phone
+### 2. USSD: Building Services That Work on Any Phone
 
-USSD was one of the most engaging parts of the afternoon. A user dials a code and walks a menu. No smartphone app, and no mobile data. Africa's Talking's USSD gateway is built to take a high volume of concurrent API requests, so a developer can put a USSD application up quickly.
+The USSD section was one of the most engaging parts of the session. USSD allows developers to create interactive menus that users can access by dialing a code, without needing a smartphone app or mobile data. Africa's Talking describes its USSD gateway as capable of handling thousands of concurrent API requests and enabling developers to deploy USSD applications quickly.
 
-The starter repository is [Osike/ussdAT](https://github.com/Osike/ussdAT).
+I shared the USSD starter repository here: [Osike/ussdAT](https://github.com/Osike/ussdAT).
 
-We talked through uses that fit the Coast and the rest of the country:
+We discussed practical USSD use cases such as:
 
 - Checking availability for boat rides or tours
-- Registering for an event or a service
+- Registering for events or services
 - Collecting customer feedback
-- Showing account or order status
-- A simple service menu for a business that does not have a mobile app yet
+- Providing account or order status
+- Creating simple service menus for businesses without a full mobile app
 
-Africa's Talking posts the session to your callback URL: session ID, service code, phone number, and what the user just typed. The application answers with \`CON\` to keep the session open or \`END\` to close it.
+At a technical level, Africa's Talking sends session data such as the session ID, service code, phone number, and user input to a developer's callback URL. The application then responds with either \`CON\` to continue the session or \`END\` to close it.
 
-### Webhooks: Real-Time Events into the Application
+### 3. Webhooks: Connecting Real-Time Events to Applications
 
-A webhook is a URL your server exposes so another system can send data when something happens. In this ecosystem, callbacks carry delivery reports, incoming messages, and USSD interactions.
+Webhooks were the final major topic. A webhook is essentially a URL that a server exposes so another system can send it data when something happens. In the Africa's Talking ecosystem, callbacks or webhooks are commonly used for delivery reports, incoming messages, and USSD interactions.
 
-The starter repository is [Osike/webhooks](https://github.com/Osike/webhooks).
+I shared the webhooks repository here: [Osike/webhooks](https://github.com/Osike/webhooks).
 
-This is the shift from a static app to a reactive one. Nobody has to poll for a new message or a delivery update. The event arrives, and the backend can write the database, notify an admin, send a confirmation, or start the next workflow.
+This part of the session helped participants see how their applications can become reactive rather than static. Instead of manually checking for new messages or delivery updates, a webhook-enabled backend can receive the event instantly and trigger the next action—such as updating a database, notifying an admin, sending a confirmation, or starting another workflow.
 
 ## Panel Discussion: Building Beyond the Code
 
-The panel with **Emmanuel Madanga**, CEO of Beyond Data ICT, and **Issack** was one of the most useful parts of the day. The technical sessions showed *how* to build. The panel asked *why* we build, *who* we build for, and what it takes to turn a demo into impact.
+One of the most valuable parts of the session was the panel discussion featuring **Emmanuel Madanga**, CEO of Beyond Data ICT, **Issack**, and **Shadrack Osike**, CEO of BARRIZII. While the technical sessions showed participants how to build, the panel explored why we build, who we build for, and what it takes to turn technology into a trusted and sustainable business.
 
-Technical skill is not enough. You also need the problem, the user, the business model, and the local context. Emmanuel and Issack pushed the room to write solutions that are useful, sustainable, and relevant to real communities.
+### Winning Customer Trust
 
-- **Start with a real problem.** Technology should meet a clear need, not only show what is possible.
-- **Design for accessibility.** SMS and USSD reach people who may not have a smartphone, stable internet, or comfort with apps.
-- **Build with the community.** How people communicate, pay, and decide is the brief.
-- **Think like a builder and an entrepreneur.** A demo is a start. A product needs iteration, feedback, distribution, and persistence.
-- **Collaboration creates opportunity.** Mombasa's tech ecosystem gets stronger when developers, businesses, mentors, and community leaders work in the same room.
+A major theme was how startups can win the trust of clients, especially in markets where people may be cautious about adopting new digital platforms. I shared that trust is not something a startup demands from users—it is something it earns by building with them.
 
-Innovation is not only APIs, repositories, and deployments. It is technology tied to daily life, and solutions that can grow into businesses.
+When building a solution, we should build with people in mind. Users are not just customers or data points; they are part of the community we are building within. Their feedback, lived experiences, concerns, and daily realities should shape the product from the beginning.
+
+This means involving users early, listening before assuming, testing with real people, and being transparent about how the solution works. When people see themselves reflected in the product, they are more likely to trust it, use it, and recommend it to others.
+
+### Falling in Love with the Idea Before Funding
+
+We also discussed funding—one of the biggest concerns for early-stage founders. My contribution was that founders should first fall in love with their idea before expecting funding to follow.
+
+Funding is important, but it should not be the starting point. A founder needs to understand the problem deeply, believe in the solution, test it with real users, and demonstrate genuine commitment. When the idea is strong and the founder shows persistence, funding opportunities become easier to pursue.
+
+I also noted that funding is not one-size-fits-all. There are different types of funding, including grants, equity investment, and debt. Debt, in particular, can sometimes be more accessible for early businesses, but it comes with repayment obligations. The right funding path depends on the stage of the startup, the founder's goals, and the kind of growth they want to pursue.
+
+### Shortening the Idea-to-Product Journey
+
+Emmanuel Madanga added an important perspective on speed. He emphasized the need to shorten the time it takes to turn an idea into a product. One practical way to do this is by accepting to bootstrap in the early stages.
+
+Bootstrapping forces founders to focus on what truly matters: solving a real problem, getting an early version into users' hands, learning quickly, and improving based on feedback. Instead of waiting for perfect conditions or large funding, founders can start small, move fast, and build momentum.
+
+The panel's overall message was clear: great startups are built through trust, persistence, community involvement, and the ability to turn ideas into usable products quickly.
 
 ## The Bigger Lesson
 
-The strongest products in that room did not start complicated. A first version can be a short chain:
+The strongest takeaway from the session was that great products do not always begin with complicated technology. Sometimes, the most impactful first version is simple:
 
 - A customer sends a message.
-- A USSD menu walks them through the service.
-- A webhook updates the system as it happens.
+- A USSD menu guides them through a service.
+- A webhook updates the system in real time.
 - An SMS confirms the action.
 
-That chain can run a booking platform, a support tool, a community service, or a business workflow.
+That simple chain can power a booking platform, a customer-support tool, a community service, or a business automation workflow.
 
 ## Resources Shared
 
-- [Session slides on Canva](https://canva.link/7mkugcqt7xrpwdt)
+To make the session easy to revisit, I shared the presentation slides on Canva, along with starter repositories for each technical area covered during the workshop:
+
+- [Session presentation on Canva](https://canva.link/7mkugcqt7xrpwdt)
 - [Webhooks repository](https://github.com/Osike/webhooks)
 - [USSD repository](https://github.com/Osike/ussdAT)
 - [SMS API repository](https://github.com/Osike/ATsmsapi)
 
-The slides are there for anyone who wants to review the material, keep experimenting, or pass the session on. Africa's Talking also offers a free sandbox where you can test SMS, USSD, payments, voice, and airtime in a simulator before production.
+The Canva slides provide a useful starting point for participants who want to review the material, continue experimenting, or share the session with other developers. For anyone who wants to test ideas further, Africa's Talking provides a free sandbox where developers can create and test SMS, USSD, payments, voice, and airtime resources using a simulator before moving to production.
 
 ## Closing Thought
 
-Mombasa has a growing community of builders who know local problems and are ready to ship practical digital services. Sessions like this turn abstract APIs into skills, and conversations into collaboration. I hope people left with working examples and with the confidence to make communication simpler and more useful for the people around them.`,
+Mombasa has a growing community of builders who understand local problems and are ready to create practical digital solutions. Sessions like this matter because they turn abstract APIs into tangible skills and conversations into collaboration. My hope is that participants left not only with working code examples, but with the confidence to build services that make communication simpler, more accessible, and more useful for the people around them.`,
     author: 'Shadrack Osike',
     publishDate: '2026-10-24',
-    readTime: 8,
+    readTime: 10,
     category: 'tech',
     tags: ["Africa's Talking", 'Mombasa', 'SMS', 'USSD', 'Webhooks'],
     image: '/at-mombasa/workshop-collaboration.webp',

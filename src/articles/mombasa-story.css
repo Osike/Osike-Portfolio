@@ -667,6 +667,34 @@
   font-size: 11px;
 }
 
+.at-story .use-list {
+  list-style: none;
+  margin: 18px 0;
+  padding: 0;
+}
+
+.at-story .use-list li {
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 0 8px 18px;
+  position: relative;
+}
+
+.at-story .use-list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.at-story .use-list li::before {
+  background: var(--orange);
+  border-radius: 50%;
+  content: '';
+  height: 6px;
+  left: 0;
+  position: absolute;
+  top: 14px;
+  width: 6px;
+}
+
 .at-story .article-figure {
   margin: 32px 0 65px;
 }

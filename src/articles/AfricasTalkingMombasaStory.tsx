@@ -19,21 +19,25 @@ const services = ['SMS', 'USSD', 'Webhooks', 'Voice', 'WhatsApp', 'Airtime'];
 
 const themes = [
   [
-    'Start with a real problem',
-    'Technology should solve a clear need, not simply showcase what is technically possible.',
+    'Winning customer trust',
+    'Trust is not something a startup demands from users—it is something it earns by building with them. Users are not just customers or data points; their feedback and daily realities should shape the product from the beginning.',
   ],
   [
-    'Design for accessibility',
-    'SMS and USSD can reach users without smartphones, stable internet, or app familiarity.',
+    'Fall in love with the idea first',
+    'Funding should not be the starting point. Understand the problem deeply, test with real users, and show commitment. Grants, equity, and debt each fit a different stage and goal.',
   ],
   [
-    'Build with the community',
-    'Local insight helps developers create products people understand, trust, and adopt.',
+    'Shorten idea to product',
+    'Emmanuel Madanga emphasized speed: bootstrap early, get a version into users’ hands, learn quickly, and improve. Start small, move fast, and build momentum.',
   ],
-  [
-    'Think like an entrepreneur',
-    'A demo is a start. A useful product needs feedback, distribution, iteration, and persistence.',
-  ],
+];
+
+const ussdUses = [
+  'Checking availability for boat rides or tours',
+  'Registering for events or services',
+  'Collecting customer feedback',
+  'Providing account or order status',
+  'Creating simple service menus for businesses without a full mobile app',
 ];
 
 const flow = [
@@ -197,7 +201,7 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
               </div>
               <div>
                 <strong>Shadrack Osike · Session reflections</strong>
-                <span>8 min read · Mombasa tech community</span>
+                <span>10 min read · Mombasa tech community</span>
               </div>
             </div>
           </div>
@@ -261,9 +265,11 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
             </p>
             <p>
               Africa&apos;s Talking gives developers a simpler way to add communication and
-              engagement features through APIs for SMS, USSD, Voice, WhatsApp, Airtime, and
-              Mobile Data. In Mombasa, that message felt especially relevant: useful services
-              do not need a complex app or expensive infrastructure to start.
+              engagement features to applications through APIs for SMS, USSD, Voice, WhatsApp,
+              Airtime, and Mobile Data. In Mombasa, that message felt especially relevant: many
+              useful services do not need a complex app or expensive infrastructure to
+              start—they can begin with a simple SMS notification, a USSD menu, or a webhook
+              that responds to user activity.
             </p>
 
             <div className="photo-story" aria-label="Scenes from the workshop">
@@ -294,8 +300,8 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                 The workshop focused on tools that solve everyday problems in Kenya and across
                 Africa. SMS remains one of the most reliable ways to reach customers, while USSD
                 makes digital services accessible even on basic phones without internet
-                connectivity. Webhooks connect these services to modern applications by sending
-                real-time data to a developer&apos;s server.
+                connectivity. Webhooks then connect these services to modern applications by
+                allowing external systems to send real-time data to a developer&apos;s server.
               </p>
               <blockquote>
                 <p>
@@ -323,9 +329,11 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   <h3>SMS with the Africa&apos;s Talking API</h3>
                   <p>
                     We began with SMS because it is often the easiest entry point for
-                    developers. Using the SMS API and Python SDK, participants explored how to
-                    send messages programmatically, handle delivery feedback, and think about SMS
-                    as more than a notification channel.
+                    developers. Using the Africa&apos;s Talking SMS API and Python SDK,
+                    participants explored how to send messages programmatically, handle delivery
+                    feedback, and think about SMS as more than a notification channel. The goal
+                    was to show that a developer can move from idea to a working messaging
+                    workflow quickly—booking confirmations, alerts, OTPs, or promotional updates.
                   </p>
                   <ExternalLink href="https://github.com/Osike/ATsmsapi">
                     Explore the SMS starter repository
@@ -350,10 +358,20 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   <p className="eyebrow">No app. No data. Any phone.</p>
                   <h3>USSD for accessible services</h3>
                   <p>
-                    USSD allows developers to create interactive menus that users access by
-                    dialing a code—without needing a smartphone app or mobile data. We explored
-                    use cases including tour availability, event registration, customer
-                    feedback, and order status.
+                    USSD allows developers to create interactive menus that users can access by
+                    dialing a code, without needing a smartphone app or mobile data. Africa&apos;s
+                    Talking describes its USSD gateway as capable of handling thousands of
+                    concurrent API requests so developers can deploy applications quickly.
+                  </p>
+                  <ul className="use-list">
+                    {ussdUses.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  <p>
+                    Africa&apos;s Talking sends session data such as the session ID, service
+                    code, phone number, and user input to a callback URL. The application then
+                    responds with either CON to continue the session or END to close it.
                   </p>
                   <div className="code-note">
                     <div>
@@ -377,10 +395,11 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   <p className="eyebrow">React in real time</p>
                   <h3>Webhooks that connect the workflow</h3>
                   <p>
-                    A webhook is a URL exposed by a server so another system can send it data
-                    when something happens. Instead of manually checking for messages or
-                    delivery updates, a backend receives the event instantly and triggers the
-                    next action.
+                    A webhook is a URL a server exposes so another system can send it data when
+                    something happens. In this ecosystem, callbacks carry delivery reports,
+                    incoming messages, and USSD interactions. Instead of checking manually, a
+                    webhook-enabled backend receives the event instantly and can update a
+                    database, notify an admin, send a confirmation, or start another workflow.
                   </p>
                   <ExternalLink href="https://github.com/Osike/webhooks">
                     Explore the webhooks repository
@@ -417,11 +436,12 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                 Building beyond the code
               </SectionHeading>
               <p>
-                One of the most valuable parts of the session was the panel discussion with{' '}
-                <strong>Emmanuel Madanga</strong>, CEO of Beyond Data ICT, and{' '}
-                <strong>Issack</strong>. While the technical sessions showed participants{' '}
-                <em>how</em> to build, the panel explored <em>why</em> we build, <em>who</em> we
-                build for, and <em>what</em> turns technology into impact.
+                One of the most valuable parts of the session was the panel discussion featuring{' '}
+                <strong>Emmanuel Madanga</strong>, CEO of Beyond Data ICT,{' '}
+                <strong>Issack</strong>, and <strong>Shadrack Osike</strong>, CEO of BARRIZII.
+                While the technical sessions showed participants how to build, the panel
+                explored why we build, who we build for, and what it takes to turn technology
+                into a trusted and sustainable business.
               </p>
 
               <div className="themes-grid">
@@ -433,6 +453,11 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   </div>
                 ))}
               </div>
+              <p>
+                The panel&apos;s overall message was clear: great startups are built through
+                trust, persistence, community involvement, and the ability to turn ideas into
+                usable products quickly.
+              </p>
 
               <figure className="article-figure">
                 <img
@@ -454,7 +479,7 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   />
                   <figcaption>
                     <span>Beyond the code</span>
-                    The panel explored users, business models, and sustainable local impact.
+                    Trust, funding, and how quickly an idea can become a product people use.
                   </figcaption>
                 </figure>
                 <figure>
@@ -476,8 +501,9 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                 The bigger lesson
               </SectionHeading>
               <p>
-                Great products do not always begin with complicated technology. Sometimes, the
-                most impactful first version is a simple chain:
+                The strongest takeaway from the session was that great products do not always
+                begin with complicated technology. Sometimes, the most impactful first version
+                is simple:
               </p>
               <ol className="flow">
                 {flow.map((item, index) => (
@@ -498,8 +524,9 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                 Resources from the session
               </SectionHeading>
               <p>
-                Revisit the workshop, continue experimenting, or use these starters as a
-                foundation for your own service.
+                To make the session easy to revisit, I shared the presentation slides on Canva,
+                along with starter repositories for each technical area covered during the
+                workshop.
               </p>
               <div className="resources-grid">
                 {resources.map((resource, index) => (
@@ -529,8 +556,9 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
                   <p className="eyebrow">Start in the sandbox</p>
                   <h3>Test the idea before going live.</h3>
                   <p>
-                    Africa&apos;s Talking provides a free sandbox where developers can test SMS,
-                    USSD, payments, voice, and airtime resources using a simulator.
+                    Africa&apos;s Talking provides a free sandbox where developers can create
+                    and test SMS, USSD, payments, voice, and airtime resources using a
+                    simulator before moving to production.
                   </p>
                 </div>
                 <ExternalLink href="https://africastalking.com">
@@ -552,9 +580,11 @@ export const AfricasTalkingMombasaStory: React.FC = () => {
               </h2>
               <p>
                 Mombasa has a growing community of builders who understand local problems and
-                are ready to create practical digital solutions. My hope is that participants
-                left not only with working code, but with the confidence to make communication
-                simpler and more useful for the people around them.
+                are ready to create practical digital solutions. Sessions like this matter
+                because they turn abstract APIs into tangible skills and conversations into
+                collaboration. My hope is that participants left not only with working code
+                examples, but with the confidence to build services that make communication
+                simpler, more accessible, and more useful for the people around them.
               </p>
             </div>
           </div>
