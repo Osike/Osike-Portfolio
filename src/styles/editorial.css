@@ -622,11 +622,54 @@ button.o-chip:hover {
   display: block;
 }
 
-.o-frame img {
-  width: 100%;
+.o-frame-url {
+  margin-left: 8px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.o-frame-view {
+  position: relative;
   height: 330px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+
+.o-frame-view img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+.o-frame-view iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 900px;
+  border: 0;
+  pointer-events: none;
+  transform: scale(var(--preview-scale, 0.5));
+  transform-origin: top left;
+  opacity: 0;
+}
+
+.o-frame.is-ready iframe {
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+.o-frame-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
 
 .o-proj-shot.is-type {
@@ -2244,7 +2287,7 @@ a.o-badge.is-chapter:hover {
     gap: 28px;
   }
 
-  .o-frame img {
+  .o-frame-view {
     height: 200px;
   }
 

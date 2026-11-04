@@ -1,7 +1,53 @@
-import React from 'react';
-import { projects } from '../data/projects';
+import React, { useEffect, useRef, useState } from 'react';
+import { projects, type Project } from '../data/projects';
 
 const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+
+function SitePreview({ project }: { project: Project }) {
+  const [ready, setReady] = useState(false);
+  const viewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = viewRef.current;
+    if (!el) return undefined;
+    const sync = () => {
+      el.style.setProperty('--preview-scale', String((el.clientWidth || 1280) / 1280));
+    };
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="o-proj-shot">
+      <div className={`o-frame ${ready ? 'is-ready' : 'is-loading'}`}>
+        <div className="o-frame-bar">
+          <i />
+          <i />
+          <i />
+          <span className="o-frame-url">{host(project.url)}</span>
+        </div>
+        <div className="o-frame-view" ref={viewRef}>
+          {project.image ? <img src={project.image} alt="" aria-hidden="true" /> : null}
+          <iframe
+            src={project.url}
+            title={`${project.title} live landing page`}
+            loading="lazy"
+            onLoad={() => setReady(true)}
+          />
+          <a
+            className="o-frame-hit"
+            href={project.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Visit ${project.title}`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export const Projects: React.FC = () => {
   return (
@@ -38,27 +84,7 @@ export const Projects: React.FC = () => {
               </a>
             </div>
 
-            {project.image ? (
-              <a className="o-proj-shot" href={project.url} target="_blank" rel="noreferrer" aria-label={`Visit ${project.title}`}>
-                <div className="o-frame">
-                  <div className="o-frame-bar">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                  <img src={project.image} alt={`${project.title} home page`} loading="lazy" />
-                </div>
-              </a>
-            ) : (
-              <div className="o-proj-shot is-type">
-                <div className="o-big">ICP</div>
-                <div className="o-pillars">
-                  {project.pillars?.map((pillar) => (
-                    <span key={pillar}>{pillar}</span>
-                  ))}
-                </div>
-              </div>
-            )}
+            <SitePreview project={project} />
           </article>
         ))}
       </div>
